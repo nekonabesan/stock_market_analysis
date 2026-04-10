@@ -1,0 +1,3 @@
+# Minimum packages for container bootstrap
+# Full project dependencies are managed by uv via pyproject.toml
+uv>=0.4.0

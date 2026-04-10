@@ -1,0 +1,7 @@
+{
+  "jupyter.jupyterServerType": "remote",
+  "jupyter.serverUri": "http://127.0.0.1:8888",
+  "jupyter.kernels.trusted": [
+    "http://127.0.0.1:8888"
+  ]
+}
