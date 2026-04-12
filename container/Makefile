@@ -1,10 +1,14 @@
-.PHONY: build start stop logs migrate seed test
+.PHONY: build build-clean start stop logs migrate seed test
 
 COMPOSE := docker compose
 MIGRATION_MSG ?= auto_migration
 TEST_PATH ?= tests/
 
 build:
+	$(COMPOSE) down --rmi all --remove-orphans
+	$(COMPOSE) build --no-cache
+
+build-clean:
 	$(COMPOSE) down --rmi all --volumes --remove-orphans
 	$(COMPOSE) build --no-cache
 
