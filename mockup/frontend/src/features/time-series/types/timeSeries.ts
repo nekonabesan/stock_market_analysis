@@ -7,6 +7,8 @@ export type TimeSeriesRow = {
   volume: number;
   ma5?: number | null;
   ma25?: number | null;
+  upper2?: number | null;
+  lower2?: number | null;
   macd?: number | null;
   macd_signal?: number | null;
   hist?: number | null;

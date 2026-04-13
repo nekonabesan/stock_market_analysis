@@ -60,12 +60,24 @@ describe("TimeSeries", () => {
     vi.mocked(useTimeSeriesModule.useTimeSeries).mockReturnValue({
       rows: [
         {
+          date: "2026-03-31",
+          open: 98,
+          high: 108,
+          low: 88,
+          close: 100,
+          volume: 8000,
+          upper2: 112,
+          lower2: 84,
+        },
+        {
           date: "2026-04-01",
           open: 100,
           high: 110,
           low: 90,
           close: 105,
           volume: 10000,
+          upper2: 114,
+          lower2: 86,
         },
       ],
       isLoading: false,
@@ -76,5 +88,6 @@ describe("TimeSeries", () => {
 
     expect(screen.getByRole("img", { name: "時系列チャート" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "7203.T" })).toBeInTheDocument();
+    expect(screen.getByTestId("bb-band")).toBeInTheDocument();
   });
 });
