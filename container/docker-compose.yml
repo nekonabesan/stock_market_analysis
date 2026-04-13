@@ -55,8 +55,26 @@ services:
     networks:
       - stock_market_net
 
+  mockup:
+    build:
+      context: ..
+      dockerfile: container/mockup/Dockerfile.dev
+    container_name: stock_market_mockup
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../mockup/frontend:/app
+      - mockup_node_modules:/app/node_modules
+    depends_on:
+      - api
+    networks:
+      - stock_market_net
+
 volumes:
   db_data:
+  mockup_node_modules:
 
 networks:
   stock_market_net:

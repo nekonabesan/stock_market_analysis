@@ -91,7 +91,7 @@ def test_upsert_stock_data_returns_200_when_service_success(monkeypatch):
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.post("/api/v1/stock/data", json={"code": "7203.T"})
+    response = client.post("/api/v1/stock_price/", json={"code": "7203.T"})
 
     assert response.status_code == 200
     assert response.json() == {"result": True}
@@ -106,7 +106,7 @@ def test_upsert_stock_data_returns_404_when_service_false(monkeypatch):
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.post("/api/v1/stock/data", json={"code": "7203.T"})
+    response = client.post("/api/v1/stock_price/", json={"code": "7203.T"})
 
     assert response.status_code == 404
     assert "could not be fetched" in response.json()["detail"]
@@ -121,7 +121,7 @@ def test_upsert_stock_data_returns_400_when_service_raises_value_error(monkeypat
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.post("/api/v1/stock/data", json={"code": "7203.T"})
+    response = client.post("/api/v1/stock_price/", json={"code": "7203.T"})
 
     assert response.status_code == 400
     assert response.json()["detail"] == "start and end are required"
@@ -136,7 +136,7 @@ def test_upsert_stock_data_returns_500_when_service_raises_unexpected_error(monk
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.post("/api/v1/stock/data", json={"code": "7203.T"})
+    response = client.post("/api/v1/stock_price/", json={"code": "7203.T"})
 
     assert response.status_code == 500
     assert response.json()["detail"] == "An unexpected error occurred"
@@ -152,7 +152,7 @@ def test_get_stock_data_returns_200_when_service_success(monkeypatch):
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/stock/get",
+        "/api/v1/stock_price/",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -170,7 +170,7 @@ def test_get_stock_data_returns_404_when_service_returns_none(monkeypatch):
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/stock/get",
+        "/api/v1/stock_price/",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -187,7 +187,7 @@ def test_get_stock_data_returns_400_when_service_raises_value_error(monkeypatch)
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.get("/api/v1/stock/get", params={"code": "7203.T"})
+    response = client.get("/api/v1/stock_price/", params={"code": "7203.T"})
 
     assert response.status_code == 400
     assert response.json()["detail"] == "start and end are required"
@@ -203,7 +203,7 @@ def test_get_stock_data_returns_500_when_service_raises_runtime_error(monkeypatc
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/stock/get",
+        "/api/v1/stock_price/",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 

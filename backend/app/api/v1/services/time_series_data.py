@@ -1,4 +1,5 @@
 import datetime as dt
+import numpy as np
 import pandas as pd
 import talib as ta
 
@@ -55,38 +56,50 @@ class TimeSeriesDataService:
             df.sort_values(by="date", inplace=True)
             close = df["close"]
 
-            # 移動平均線
+            # 移動平均線を導出
             df["ma5"] = self._calc_sma(close, window=5)
             df["ma25"] = self._calc_sma(close, window=25)
 
-            # RSI
+            # RSIを導出
             df["rsi14"] = self._calc_rsi(close, timeperiod=14)
             df['rsi28'] = self._calc_rsi(close, timeperiod=28)
 
-            # MACDをDataFrameに追加
+            # MACDを導出
             df["macd"], df["macd_signal"], df["hist"] = self._calc_macd(close, fastperiod=12, 
                                                                         slowperiod=26, signalperiod=9)
 
-            # SMA
+            # SMAを導出
             df["sma_20"] = self._calc_sma(close, window=20)
 
-            # EMA
+            # EMAを導出
             df["ema_20"] = self._calc_ema(close, window=20)
 
-            # ストキャスティクス
+            # ストキャスティクスを導出
             df['slowK'], df['slowD'] = self._calc_stochastic(df, fastk_period=5, slowk_period=3, slowd_period=3,
                                                                 slowk_matype=0, slowd_matype=0)
             
-            # ボリンジャーバンド1σ
+            # ボリンジャーバンド1σを導出
             df["upper1"], _, df["lower1"] = self._calc_bollinger_bands(close, timeperiod=25, 
                                                                     nbdevup=1, nbdevdn=1, matype=ta.MA_Type.SMA)
-            # ボリンジャーバンド2σ
+            # ボリンジャーバンド2σを導出
             df["upper2"], _, df["lower2"] = self._calc_bollinger_bands(close, timeperiod=25, 
                                                                     nbdevup=2, nbdevdn=2, matype=ta.MA_Type.SMA)
 
-            # RCI
+            # RCIを導出
             df["rci9"] = self._calc_rci(close, window=9)
             df["rci26"] = self._calc_rci(close, window=26)
+
+            # 移動平均線のゴールデンクロスとデッドクロスを導出
+            df["gc"], df["dc"] = self._calc_gc(df)
+
+            # MACDのゴールデンクロスとデッドクロスを導出
+            df["macd_gc"], df["macd_dc"] = self._calc_macd_cross(df)
+
+            # RCIのゴールデンクロスとデッドクロスを導出
+            df["rci_gc"], df["rci_dc"] = self._calc_rci_cross(df)
+
+            # 上昇条件を導出
+            df["rising_condition"] = self._check_rising_condition(df)
 
             # 指定された期間でフィルタリング
             df = df[(df["date"] >= start) & (df["date"] <= end)]
@@ -208,3 +221,79 @@ class TimeSeriesDataService:
 
         mapper = inspect(StockPrice)
         return {column.key: getattr(row, column.key) for column in mapper.columns}
+    
+    def _calc_gc(self, df: pd.DataFrame) -> pd.Series:
+        """
+        5日移動平均線と25日移動平均線のゴールデンクロスを計算する関数
+        Args:
+            df (pd.DataFrame): 株価データのDataFrame。'close'列が必要。
+        Returns:
+            pd.Series: ゴールデンクロスのシグナルを含むSeries。
+        """
+        # ゴールデンクロス
+        cross = df["ma5"] > df["ma25"]
+        df["cross"] = cross
+        cross_shift = df["cross"].shift(1)
+        # ゴールデンクロスの発生日
+        temp_gc = (cross != cross_shift) & (cross == True)
+        # デッドクロスの発生日
+        temp_dc = (cross != cross_shift) & (cross == False)
+        # ゴールデンクロスの発生日であればMA5の値、それ以外はNaN
+        gc = [m if g == True else np.nan for g, m in zip(temp_gc, df["ma5"])]
+        # デッドクロスの発生日であればMA25の値、それ以外はNaN
+        dc = [m if d == True else np.nan for d, m in zip(temp_dc, df["ma25"])]
+        return pd.Series(gc), pd.Series(dc)
+
+    def _calc_macd_cross(self, df: pd.DataFrame) -> pd.Series:
+        """
+        MACDとシグナル線のゴールデンクロスを計算する関数
+        Args:
+            df (pd.DataFrame): 株価データのDataFrame。'macd'列と'macd_signal'列が必要。
+        Returns:
+            pd.Series: ゴールデンクロスのシグナルを含むSeries。
+        """
+        cross = df["macd"] > df["macd_signal"]
+        cross_shift = cross.shift(1)
+        temp_gc = (cross != cross_shift) & (cross == True)
+        temp_dc = (cross != cross_shift) & (cross == False)
+        gc = [m if g == True else np.nan for g, m in zip(temp_gc, df["macd"])]
+        dc = [m if d == True else np.nan for d, m in zip(temp_dc, df["macd_signal"])]
+        return pd.Series(gc), pd.Series(dc)
+    
+    def _calc_rci_cross(self, df: pd.DataFrame) -> pd.Series:
+        """
+        rci9とrci26のゴールデンクロスを計算する関数
+        Args:
+            df (pd.DataFrame): 株価データのDataFrame。'rci9'列と'rci26'列が必要。
+        Returns:
+            pd.Series: ゴールデンクロスのシグナルを含むSeries。
+        """
+        cross = df["rci9"] > df["rci26"]
+        cross_shift = cross.shift(1)
+        temp_gc = (cross != cross_shift) & (cross == True)
+        temp_dc = (cross != cross_shift) & (cross == False)
+        gc = [m if g == True else np.nan for g, m in zip(temp_gc, df["rci9"])]
+        dc = [m if d == True else np.nan for d, m in zip(temp_dc, df["rci26"])]
+        return pd.Series(gc), pd.Series(dc)
+    
+    def _check_rising_condition(self, df: pd.DataFrame) -> pd.Series:
+        """
+        ・MACDがシグナルより下でゴールデンクロス前
+        ・MACDが日々上昇しつつある
+        ・長期RCIが-50未満
+        Args:
+            df (pd.DataFrame): 株価データのDataFrame。'macd'列、'macd_signal'列、'rci26'列が必要。
+        Returns:
+            pd.Series: 条件を満たす場合はTrue、そうでない場合はFalseを含む時系列 Series。
+        """
+        # 条件1: MACDがシグナルより下（ゴールデンクロス前）
+        condition1 = df["macd"] < df["macd_signal"]
+        
+        # 条件2: MACDが日々上昇している（前日より上昇）
+        condition2 = df["macd"].diff() > 0
+        
+        # 条件3: 長期RCIが-50未満
+        condition3 = df["rci26"] < -50
+        
+        return condition1 & condition2 & condition3
+        

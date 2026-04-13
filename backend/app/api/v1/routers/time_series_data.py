@@ -8,7 +8,7 @@ from app.api.v1.services.time_series_data import TimeSeriesDataService
 router = APIRouter()
 
 @router.get(
-    "/get",
+    "",
     response_model=TimeSeriesDataGetResponse,
     status_code=status.HTTP_200_OK,
     summary="銘柄コードの株価データを取得",

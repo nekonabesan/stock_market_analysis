@@ -66,7 +66,7 @@ def test_get_time_series_data_returns_200_when_service_success(monkeypatch):
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data/get",
+        "/api/v1/time_series_data",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -84,7 +84,7 @@ def test_get_time_series_data_returns_404_when_service_returns_empty_list(monkey
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data/get",
+        "/api/v1/time_series_data",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -101,7 +101,7 @@ def test_get_time_series_data_returns_400_when_service_raises_value_error(monkey
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.get("/api/v1/time_series_data/get", params={"code": "7203.T"})
+    response = client.get("/api/v1/time_series_data", params={"code": "7203.T"})
 
     assert response.status_code == 400
     assert response.json()["detail"] == "start and end are required"
@@ -117,7 +117,7 @@ def test_get_time_series_data_returns_500_when_service_raises_runtime_error(monk
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data/get",
+        "/api/v1/time_series_data",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -135,7 +135,7 @@ def test_get_time_series_data_returns_500_when_service_raises_unexpected_error(m
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data/get",
+        "/api/v1/time_series_data",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 

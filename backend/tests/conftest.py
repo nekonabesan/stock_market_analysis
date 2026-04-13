@@ -30,6 +30,28 @@ if "Modules" not in sys.modules:
     sys.modules["Modules.get_market_data"] = _fake_get_market_data
 
 
+# rci.py stub（テスト用 FakeRci）
+if "app.api.v1.services.rci" not in sys.modules:
+    _fake_rci_module = types.ModuleType("app.api.v1.services.rci")
+
+    class FakeRci:
+        def RCI(self, close, timeperiod=9):
+            # テスト用: リストの長さに合わせて値を返す
+            # 計算期間までは NaN を返す
+            result = []
+            for i in range(len(close)):
+                if i < timeperiod - 1:
+                    # 計算期間に満たない場合は NaN を返す
+                    result.append(float('nan'))
+                else:
+                    # テスト用の値: iの位置によって -40 から 40 の値を返す
+                    result.append(-40.0 + (i % 80))
+            return result
+
+    _fake_rci_module.Rci = FakeRci
+    sys.modules["app.api.v1.services.rci"] = _fake_rci_module
+
+
 @pytest.fixture
 def mock_db():
     return MagicMock()

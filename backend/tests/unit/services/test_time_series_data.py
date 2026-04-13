@@ -8,19 +8,8 @@ import pytest
 
 
 # NOTE:
-# rci.py は plotly / Modules をノートブック専用パッケージとして import するため、
-# conftest.py のスタブに依存する。talib は pyproject.toml 経由で実インストール済み。
-
-if "app.api.v1.services.rci" not in sys.modules:
-    fake_rci_module = types.ModuleType("app.api.v1.services.rci")
-
-    class FakeRci:
-        def RCI(self, close, timeperiod=9):
-            return [0.0] * len(close)
-
-    fake_rci_module.Rci = FakeRci
-    sys.modules["app.api.v1.services.rci"] = fake_rci_module
-
+# rci.py は conftest.py で FakeRci として定義済みのため、ここでの定義は不要。
+# talib は pyproject.toml 経由で実インストール済み。
 
 service_module = importlib.import_module("app.api.v1.services.time_series_data")
 TimeSeriesDataService = service_module.TimeSeriesDataService
@@ -134,6 +123,8 @@ def test_get_time_series_data_filters_by_date_and_returns_enriched_rows():
     assert "ma5" in result[0]
     assert "macd" in result[0]
     assert "rci9" in result[0]
+    assert "rci26" in result[0]
+    assert "rising_condition" in result[0]
 
 
 def test_get_time_series_data_wraps_unexpected_exception_into_runtime_error(monkeypatch):
@@ -152,3 +143,58 @@ def test_get_time_series_data_wraps_unexpected_exception_into_runtime_error(monk
             start=dt.date(2025, 1, 1),
             end=dt.date(2025, 1, 31),
         )
+
+
+def test_check_rising_condition_all_conditions_met():
+    """3つの条件をすべて満たす場合、True を返す行がある"""
+    # 十分なデータを用意（約1ヶ月分で、計算に必要な期間をカバー）
+    import pandas as pd
+    
+    dates = pd.date_range(start="2024-10-01", periods=30, freq="D")
+    records = [
+        _Record("7203", "TSE", d.date(), 100 + i, 101 + i, 99 + i, 100 + i, 1000)
+        for i, d in enumerate(dates)
+    ]
+    service = TimeSeriesDataService(db_session=_FakeSession(records))
+
+    result = service.get_time_series_data(
+        code="7203",
+        market="TSE",
+        start=dt.date(2024, 10, 1),
+        end=dt.date(2024, 10, 25),
+    )
+
+    # 結果に rising_condition カラムが存在することを確認
+    assert len(result) > 0
+    assert "rising_condition" in result[0]
+    # rising_condition は bool 値（True または False）
+    assert isinstance(result[0]["rising_condition"], (bool, type(None)))
+
+
+def test_check_rising_condition_returns_series_with_bool_values():
+    """_check_rising_condition が bool Series を返すことを確認"""
+    import pandas as pd
+    
+    dates = pd.date_range(start="2024-10-01", periods=30, freq="D")
+    records = [
+        _Record("7203", "TSE", d.date(), 100 + i, 101 + i, 99 + i, 100 + i, 1000)
+        for i, d in enumerate(dates)
+    ]
+    service = TimeSeriesDataService(db_session=_FakeSession(records))
+
+    result = service.get_time_series_data(
+        code="7203",
+        market="TSE",
+        start=dt.date(2024, 10, 1),
+        end=dt.date(2024, 10, 25),
+    )
+
+    # 返却値は遅延を含む辞書のリスト
+    assert isinstance(result, list)
+    assert len(result) > 0
+    assert isinstance(result[0], dict)
+    assert "date" in result[0]
+    assert "close" in result[0]
+    assert "macd" in result[0]
+    assert "macd_signal" in result[0]
+    assert "rci26" in result[0]

@@ -55,7 +55,7 @@ def test_get_stocks_returns_200_when_service_success(monkeypatch):
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.get("/api/v1/stocks/get")
+    response = client.get("/api/v1/stocks/")
 
     assert response.status_code == 200
     assert len(response.json()["results"]) == 1
@@ -71,7 +71,7 @@ def test_get_stocks_returns_404_when_service_returns_none(monkeypatch):
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.get("/api/v1/stocks/get")
+    response = client.get("/api/v1/stocks/")
 
     assert response.status_code == 404
     assert response.json()["detail"] == "Stock data not found"
@@ -86,7 +86,7 @@ def test_get_stocks_returns_400_when_service_raises_value_error(monkeypatch):
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.get("/api/v1/stocks/get")
+    response = client.get("/api/v1/stocks/")
 
     assert response.status_code == 400
     assert response.json()["detail"] == "invalid request"
@@ -101,7 +101,7 @@ def test_get_stocks_returns_500_when_service_raises_unexpected_error(monkeypatch
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.get("/api/v1/stocks/get")
+    response = client.get("/api/v1/stocks/")
 
     assert response.status_code == 500
     assert response.json()["detail"] == "An unexpected error occurred"

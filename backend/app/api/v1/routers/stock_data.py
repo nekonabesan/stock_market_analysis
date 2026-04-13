@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post(
-    "/data",
+    "/",
     response_model=StockDataUpsertResponse,
     status_code=status.HTTP_200_OK,
     summary="銘柄コードの株価データをUPSERT",
@@ -50,7 +50,7 @@ def upsert_stock_data(
         ) from e
 
 @router.get(
-    "/get",
+    "/",
     response_model=StockDataGetResponse,
     status_code=status.HTTP_200_OK,
     summary="銘柄コードの株価データを取得",

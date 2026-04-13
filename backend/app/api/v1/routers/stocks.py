@@ -8,11 +8,11 @@ from app.api.v1.services.stocks import StocksService
 router = APIRouter()
 
 @router.get(
-    "/get",
+    "/",
     response_model=StockGetResponse,
     status_code=status.HTTP_200_OK,
-    summary="銘柄コードの株価データを取得",
-    description="指定した銘柄コードの株価データをDBから取得する。",
+    summary="銘柄の基本情報を取得",
+    description="指定した銘柄の基本情報を取得する。",
 )
 def get_stocks(
     request: StockGetRequest = Depends(),
