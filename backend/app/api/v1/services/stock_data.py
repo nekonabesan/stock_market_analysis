@@ -116,7 +116,7 @@ class StockDataService:
         self,
         code: str,
         market: str | None,
-        start: dt.date | None,
+        start: dt.date,
         end: dt.date | None,
     ) -> list[dict] | None:
         """

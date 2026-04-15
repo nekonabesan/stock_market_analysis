@@ -1,0 +1,86 @@
+from datetime import date, datetime
+
+from sqlalchemy import Date, DateTime, String, func
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.db.session import Base
+
+
+class BalanceSheet(Base):
+    __tablename__ = "trn_balance_sheet"
+
+    date: Mapped[date] = mapped_column(Date, primary_key=True)
+    market: Mapped[str] = mapped_column(String(64), primary_key=True, nullable=False)
+    code:   Mapped[str] = mapped_column(String(16), primary_key=True, nullable=False)
+    treasury_shares_number: Mapped[float] = mapped_column(nullable=True)
+    ordinary_shares_number: Mapped[float] = mapped_column(nullable=True)
+    share_issued: Mapped[float] = mapped_column(nullable=True)
+    total_debt: Mapped[float] = mapped_column(nullable=True)
+    tangible_book_value: Mapped[float] = mapped_column(nullable=True)
+    invested_capital: Mapped[float] = mapped_column(nullable=True)
+    working_capital: Mapped[float] = mapped_column(nullable=True)
+    net_tangible_assets: Mapped[float] = mapped_column(nullable=True)
+    common_stock_equity: Mapped[float] = mapped_column(nullable=True)
+    total_capitalization: Mapped[float] = mapped_column(nullable=True)
+    total_equity_gross_minority_interest: Mapped[float] = mapped_column(nullable=True)
+    minority_interest: Mapped[float] = mapped_column(nullable=True)
+    stockholders_equity: Mapped[float] = mapped_column(nullable=True)
+    retained_earnings: Mapped[float] = mapped_column(nullable=True)
+    capital_stock: Mapped[float] = mapped_column(nullable=True)
+    common_stock: Mapped[float] = mapped_column(nullable=True)
+    total_liabilities_net_minority_interest: Mapped[float] = mapped_column(nullable=True)
+    total_non_current_liabilities_net_minority_interest: Mapped[float] = mapped_column(nullable=True)
+    other_non_current_liabilities: Mapped[float] = mapped_column(nullable=True)
+    tradeand_other_payables_non_current: Mapped[float] = mapped_column(nullable=True)
+    non_current_deferred_taxes_liabilities: Mapped[float] = mapped_column(nullable=True)
+    long_term_debt_and_capital_lease_obligation: Mapped[float] = mapped_column(nullable=True)
+    long_term_provisions: Mapped[float] = mapped_column(nullable=True)
+    current_liabilities: Mapped[float] = mapped_column(nullable=True)
+    other_current_liabilities: Mapped[float] = mapped_column(nullable=True)
+    current_debt_and_capital_lease_obligation: Mapped[float] = mapped_column(nullable=True)
+    current_provisions: Mapped[float] = mapped_column(nullable=True)
+    payables: Mapped[float] = mapped_column(nullable=True)
+    total_tax_payable: Mapped[float] = mapped_column(nullable=True)
+    accounts_payable: Mapped[float] = mapped_column(nullable=True)
+    total_assets: Mapped[float] = mapped_column(nullable=True)
+    total_non_current_assets: Mapped[float] = mapped_column(nullable=True)
+    other_non_current_assets: Mapped[float] = mapped_column(nullable=True)
+    non_current_deferred_taxes_assets: Mapped[float] = mapped_column(nullable=True)
+    other_investments: Mapped[float] = mapped_column(nullable=True)
+    investmentin_financial_assets: Mapped[float] = mapped_column(nullable=True)
+    available_for_sale_securities: Mapped[float] = mapped_column(nullable=True)
+    financial_assets_designatedas_fair_value_through_profitor_loss_total: Mapped[float] = mapped_column(nullable=True)
+    long_term_equity_investment: Mapped[float] = mapped_column(nullable=True)
+    investmentsin_joint_venturesat_cost: Mapped[float] = mapped_column(nullable=True)
+    investmentsin_associatesat_cost: Mapped[float] = mapped_column(nullable=True)
+    goodwill_and_other_intangible_assets: Mapped[float] = mapped_column(nullable=True)
+    other_intangible_assets: Mapped[float] = mapped_column(nullable=True)
+    goodwill: Mapped[float] = mapped_column(nullable=True)
+    net_ppe: Mapped[float] = mapped_column(nullable=True)
+    accumulated_depreciation: Mapped[float] = mapped_column(nullable=True)
+    gross_ppe: Mapped[float] = mapped_column(nullable=True)
+    construction_in_progress: Mapped[float] = mapped_column(nullable=True)
+    other_properties: Mapped[float] = mapped_column(nullable=True)
+    machinery_furniture_equipment: Mapped[float] = mapped_column(nullable=True)
+    properties: Mapped[float] = mapped_column(nullable=True)
+    current_assets: Mapped[float] = mapped_column(nullable=True)
+    assets_held_for_sale_current: Mapped[float] = mapped_column(nullable=True)
+    current_deferred_assets: Mapped[float] = mapped_column(nullable=True)
+    restricted_cash: Mapped[float] = mapped_column(nullable=True)
+    inventory: Mapped[float] = mapped_column(nullable=True)
+    finished_goods: Mapped[float] = mapped_column(nullable=True)
+    work_in_process: Mapped[float] = mapped_column(nullable=True)
+    raw_materials: Mapped[float] = mapped_column(nullable=True)
+    other_receivables: Mapped[float] = mapped_column(nullable=True)
+    taxes_receivable: Mapped[float] = mapped_column(nullable=True)
+    accounts_receivable: Mapped[float] = mapped_column(nullable=True)
+    cash_cash_equivalents_and_short_term_investments: Mapped[float] = mapped_column(nullable=True)
+    other_short_term_investments: Mapped[float] = mapped_column(nullable=True)
+    cash_and_cash_equivalents: Mapped[float] = mapped_column(nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
