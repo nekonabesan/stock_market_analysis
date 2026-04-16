@@ -4,6 +4,7 @@ from typing import Any
 
 import pandas as pd
 import yfinance as yf
+from sqlalchemy import inspect as sa_inspect
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -206,16 +207,19 @@ class CorporateFinanceDataService:
 
             if existing:
                 # 既存レコードを更新（PK以外）
+                valid_columns = {col.key for col in sa_inspect(model_class).mapper.column_attrs}
                 for key, value in record.items():
-                    if hasattr(existing, key) and value is not None:
+                    if key in valid_columns and value is not None:
                         setattr(existing, key, value)
             else:
                 # 新規レコードを作成
+                valid_columns = {col.key for col in sa_inspect(model_class).mapper.column_attrs}
+                filtered_record = {k: v for k, v in record.items() if k in valid_columns}
                 new_record = model_class(
                     date=record_date,
                     market=record_market,
                     code=record_code,
-                    **record,
+                    **filtered_record,
                 )
                 db.add(new_record)
 

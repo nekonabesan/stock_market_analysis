@@ -1,0 +1,1882 @@
+[
+  {
+    "code": "VWS.CO",
+    "name": "Vestas Wind System",
+    "market": "CPH",
+    "sector_id": 7,
+    "summary": "風力発電",
+    "currency": "DKK",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "GEV",
+    "name": "GE Vernova",
+    "market": "NYSE",
+    "sector_id": 16,
+    "summary": "風力発電,原子力",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ENR.DE",
+    "name": "Siemens Energy",
+    "market": "XETRA",
+    "sector_id": 7,
+    "summary": null,
+    "currency": "EUR",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "SIE.DE",
+    "name": "Siemens",
+    "market": "XETRA",
+    "sector_id": 16,
+    "summary": null,
+    "currency": "EUR",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "BA",
+    "name": "BAE Systems",
+    "market": "LSE",
+    "sector_id": 23,
+    "summary": null,
+    "currency": "GBR",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "RHM.DE",
+    "name": "Rheinmetall",
+    "market": "XETRA",
+    "sector_id": 23,
+    "summary": null,
+    "currency": "EUR",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "DSY.PA",
+    "name": "Dassault Systems",
+    "market": "EPA",
+    "sector_id": 23,
+    "summary": null,
+    "currency": "EUR",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "LDO.MI",
+    "name": "Leonardo SpA",
+    "market": "BIT",
+    "sector_id": 23,
+    "summary": null,
+    "currency": "EUR",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "SAAB-B.ST",
+    "name": "SaaB AB",
+    "market": "STO",
+    "sector_id": 23,
+    "summary": null,
+    "currency": "SEK",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "AEM",
+    "name": "Agnico Eagle Mines Ltd",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "金鉱",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "NEM",
+    "name": "Newcrest Mining",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "金鉱",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ABX",
+    "name": "Barrick Mining Corporation",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "金鉱",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "TSLA",
+    "name": "Tesla Inc",
+    "market": "NASDAQ",
+    "sector_id": 7,
+    "summary": "蓄電池",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "AMS",
+    "name": "ASML Holding N.V.",
+    "market": "NASDAQ",
+    "sector_id": 10,
+    "summary": "露光装置",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "3407",
+    "name": "旭化成",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "化学,繊維,住宅,建材,エレクトロニクス,医薬品",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4183",
+    "name": "三井化学",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "化学",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4188",
+    "name": "三菱ケミカルグループ",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "化学",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4005",
+    "name": "住友化学",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "化学",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "3402",
+    "name": "東レ",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "繊維",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "3405",
+    "name": "クラレ",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "高機能樹脂,繊維",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "5201",
+    "name": "AGC",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "ガラス",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "5016",
+    "name": "JX金属",
+    "market": "TSE",
+    "sector_id": 22,
+    "summary": "銅,レアメタル,リサイクル",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "5711",
+    "name": "三菱マテリアル",
+    "market": "TSE",
+    "sector_id": 24,
+    "summary": null,
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4208",
+    "name": "UBE",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "化学,ナイロン原料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "JNJ",
+    "name": "Johnson & Johnson",
+    "market": "NYSE",
+    "sector_id": 5,
+    "summary": "医薬品,医療機器",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "PG",
+    "name": "Procter & Gamble",
+    "market": "NYSE",
+    "sector_id": 12,
+    "summary": "生活必需品",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "KO",
+    "name": "Coca-Cola",
+    "market": "NYSE",
+    "sector_id": 26,
+    "summary": "清涼飲料",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "PEP",
+    "name": "PepsiCo",
+    "market": "NASDAQ",
+    "sector_id": 27,
+    "summary": "清涼飲料,スナック",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "NEE",
+    "name": "NextEra Energy",
+    "market": "NYSE",
+    "sector_id": 7,
+    "summary": "風力発電,太陽光発電",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "BEP",
+    "name": "Brookfield Renewable Partners",
+    "market": "NYSE",
+    "sector_id": 7,
+    "summary": "水力,風力,太陽光",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "FSLR",
+    "name": "First Solar",
+    "market": "NASDAQ",
+    "sector_id": 7,
+    "summary": "太陽光発電",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "CEG",
+    "name": "Constellation Energy",
+    "market": "NASDAQ",
+    "sector_id": 7,
+    "summary": "クリーンエネルギー",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "9432",
+    "name": "NTT",
+    "market": "TSE",
+    "sector_id": 20,
+    "summary": "通信インフラ",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4063",
+    "name": "信越化学工業",
+    "market": "TSE",
+    "sector_id": 8,
+    "summary": "塩ビ,シリコンウエハー",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4452",
+    "name": "花王",
+    "market": "TSE",
+    "sector_id": 12,
+    "summary": "トイレタリー,化粧品",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8058",
+    "name": "三菱商事",
+    "market": "TSE",
+    "sector_id": 15,
+    "summary": "資源,食品,インフラ",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "2914",
+    "name": "JT",
+    "market": "TSE",
+    "sector_id": 1,
+    "summary": "たばこ,医薬品",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "LIN",
+    "name": "Linde",
+    "market": "NYSE",
+    "sector_id": 13,
+    "summary": "工業ガス",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "CVX",
+    "name": "Chevron",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "石油,ガス",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "XOM",
+    "name": "Exxon Mobil",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "石油,ガス",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "BATT",
+    "name": "Amplify Lithium & Battery Technology ETF",
+    "market": "NYSE",
+    "sector_id": 18,
+    "summary": "リチウム,バッテリー技術",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "LIT",
+    "name": "Global X Lithium & Battery Tech ETF",
+    "market": "NYSE",
+    "sector_id": 18,
+    "summary": "リチウムイオンバッテリー",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "GRID",
+    "name": "First Trust NASDAQ Clean Edge Smart GRID ETF",
+    "market": "NASDAQ",
+    "sector_id": 18,
+    "summary": "スマートグリッド,エネルギーインフラ",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "ICLN",
+    "name": "iShares Global Clean Energy ETF",
+    "market": "NASDAQ",
+    "sector_id": 7,
+    "summary": "クリーンエネルギー",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "QCLN",
+    "name": "First Trust NASDAQ Clean Edge Green Energy ETF",
+    "market": "NASDAQ",
+    "sector_id": 7,
+    "summary": "クリーンエネルギー,EV",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "TAN",
+    "name": "Invesco Solar ETF",
+    "market": "NYSE",
+    "sector_id": 7,
+    "summary": "太陽光発電",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "FAN",
+    "name": "First Trust Global Wind Energy ETF",
+    "market": "NYSE",
+    "sector_id": 7,
+    "summary": "風力発電",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "GLD",
+    "name": "SPDR Gold Shares",
+    "market": "NYSE",
+    "sector_id": 4,
+    "summary": "金",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "IAU",
+    "name": "iShares Gold Trust",
+    "market": "NYSE",
+    "sector_id": 4,
+    "summary": "金",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "GLDM",
+    "name": "SPDR Gold MiniShares Trust",
+    "market": "NYSE",
+    "sector_id": 4,
+    "summary": "金",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "GDX",
+    "name": "VanEck Gold Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "金鉱株",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "GDXJ",
+    "name": "VanEck Junior Gold Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "ジュニア金鉱株",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "REMX",
+    "name": "VanEck Rare Earth/Strategic Metals ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "レアアース,戦略金属",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "COPJ",
+    "name": "Sprott Junior Copper Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "銅鉱",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "URA",
+    "name": "Global X Uranium ETF",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "ウラニウム",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "URNM",
+    "name": "Sprott Uranium Miners ETF",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "ウラニウム採掘",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "NLR",
+    "name": "VanEck Uranium and Nuclear ETF",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "原子力ユーティリティ",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "URNJ",
+    "name": "Sprott Junior Uranium Miners ETF",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "ジュニアウラン鉱山",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "SLV",
+    "name": "iShares Silver Trust",
+    "market": "NYSE",
+    "sector_id": 4,
+    "summary": "銀",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "SILJ",
+    "name": "Amplify Junior Silver Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "ジュニア銀鉱株",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "PPLT",
+    "name": "abrdn Physical Platinum Shares ETF",
+    "market": "NYSE",
+    "sector_id": 4,
+    "summary": "プラチナ",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "COPP",
+    "name": "Sprott Copper Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "銅鉱",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "LITP",
+    "name": "Sprott Lithium Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "リチウム",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "NIKL",
+    "name": "Sprott Nickel Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "ニッケル",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "SGDM",
+    "name": "Sprott Gold Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "金鉱株",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "SGDJ",
+    "name": "Sprott Junior Gold Miners ETF",
+    "market": "NYSE",
+    "sector_id": 22,
+    "summary": "ジュニア金鉱株",
+    "currency": "USD",
+    "is_etf": true,
+    "trading_unit": 1
+  },
+  {
+    "code": "JPM",
+    "name": "JPMorgan Chase",
+    "market": "NYSE",
+    "sector_id": 21,
+    "summary": "銀行",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "BRK-B",
+    "name": "Berkshire Hathaway B",
+    "market": "NYSE",
+    "sector_id": 21,
+    "summary": "複合企業",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "V",
+    "name": "Visa",
+    "market": "NYSE",
+    "sector_id": 21,
+    "summary": "決済",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "MA",
+    "name": "Mastercard",
+    "market": "NYSE",
+    "sector_id": 21,
+    "summary": "決済",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "8306",
+    "name": "三菱UFJフィナンシャル・グループ",
+    "market": "TSE",
+    "sector_id": 21,
+    "summary": "銀行",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8766",
+    "name": "東京海上ホールディングス",
+    "market": "TSE",
+    "sector_id": 21,
+    "summary": "保険",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8802",
+    "name": "三菱地所",
+    "market": "TSE",
+    "sector_id": 6,
+    "summary": "総合不動産",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8830",
+    "name": "住友不動産",
+    "market": "TSE",
+    "sector_id": 6,
+    "summary": "総合不動産",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "UNP",
+    "name": "Union Pacific",
+    "market": "NYSE",
+    "sector_id": 2,
+    "summary": "鉄道",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "CNI",
+    "name": "Canadian National Railway",
+    "market": "NYSE",
+    "sector_id": 2,
+    "summary": "鉄道",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "9020",
+    "name": "JR東日本",
+    "market": "TSE",
+    "sector_id": 2,
+    "summary": "鉄道",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "AWK",
+    "name": "American Water Works",
+    "market": "NYSE",
+    "sector_id": 2,
+    "summary": "水道",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "WM",
+    "name": "Waste Management",
+    "market": "NYSE",
+    "sector_id": 2,
+    "summary": "廃棄物処理",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "MCD",
+    "name": "McDonald's",
+    "market": "NYSE",
+    "sector_id": 25,
+    "summary": "外食",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "NESN.SW",
+    "name": "Nestlé",
+    "market": "SIX",
+    "sector_id": 25,
+    "summary": "食品・飲料",
+    "currency": "CHF",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ADM",
+    "name": "Archer-Daniels-Midland",
+    "market": "NYSE",
+    "sector_id": 19,
+    "summary": "穀物メジャー",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "DE",
+    "name": "Deere & Company",
+    "market": "NYSE",
+    "sector_id": 19,
+    "summary": "農業機械",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "2802",
+    "name": "味の素",
+    "market": "TSE",
+    "sector_id": 25,
+    "summary": "調味料,食品",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "MDT",
+    "name": "Medtronic",
+    "market": "NYSE",
+    "sector_id": 9,
+    "summary": "医療機器",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ABT",
+    "name": "Abbott Laboratories",
+    "market": "NYSE",
+    "sector_id": 9,
+    "summary": "診断,栄養,医療機器",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "SYK",
+    "name": "Stryker",
+    "market": "NYSE",
+    "sector_id": 9,
+    "summary": "整形外科機器",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "4543",
+    "name": "テルモ",
+    "market": "TSE",
+    "sector_id": 9,
+    "summary": "医療機器",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "HON",
+    "name": "Honeywell",
+    "market": "NASDAQ",
+    "sector_id": 17,
+    "summary": "航空宇宙,ビル管理,産業制御",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "CAT",
+    "name": "Caterpillar",
+    "market": "NYSE",
+    "sector_id": 17,
+    "summary": "建設機械",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "6301",
+    "name": "小松製作所",
+    "market": "TSE",
+    "sector_id": 17,
+    "summary": "建設機械,鉱山機械",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "7011",
+    "name": "三菱重工業",
+    "market": "TSE",
+    "sector_id": 17,
+    "summary": "航空宇宙,防衛,エネルギー",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8001",
+    "name": "伊藤忠商事",
+    "market": "TSE",
+    "sector_id": 15,
+    "summary": "非資源,生活消費関連",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8031",
+    "name": "三井物産",
+    "market": "TSE",
+    "sector_id": 15,
+    "summary": "資源,鉄鉱石,LNG",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8053",
+    "name": "住友商事",
+    "market": "TSE",
+    "sector_id": 15,
+    "summary": "金属,メディア,建機",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8002",
+    "name": "丸紅",
+    "market": "TSE",
+    "sector_id": 15,
+    "summary": "電力,穀物,アグリ",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "2768",
+    "name": "双日",
+    "market": "TSE",
+    "sector_id": 15,
+    "summary": "航空,インフラ,資源",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8015",
+    "name": "豊田通商",
+    "market": "TSE",
+    "sector_id": 15,
+    "summary": "自動車,アフリカ事業",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8078",
+    "name": "阪和興業",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "鉄鋼,非鉄金属",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8075",
+    "name": "神鋼商事",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "鉄鋼,機械",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8012",
+    "name": "長瀬産業",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "化学品,電子材料,半導体材料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8098",
+    "name": "稲畑産業",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "化学品,合成樹脂",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8133",
+    "name": "伊藤忠エネクス",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "LPガス,電力",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8154",
+    "name": "加賀電子",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "電子部品,半導体",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "2737",
+    "name": "トーメンデバイス",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "半導体,電子部品",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "7433",
+    "name": "伯東",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "半導体,電子材料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "9962",
+    "name": "ミスミグループ本社",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "FA部品,製造業自動化",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8014",
+    "name": "蝶理",
+    "market": "TSE",
+    "sector_id": 11,
+    "summary": "繊維,化学品",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4062",
+    "name": "イビデン",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "半導体パッケージ基板",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "7741",
+    "name": "HOYA",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "EUVマスクブランクス,光学ガラス",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4004",
+    "name": "レゾナック",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "半導体後工程材料,CMP材料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4631",
+    "name": "DIC",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "印刷インキ,顔料,機能性材料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4114",
+    "name": "日本触媒",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "高吸水性樹脂,アクリル酸",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4021",
+    "name": "日産化学",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "半導体材料,農薬,機能性材料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4203",
+    "name": "住友ベークライト",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "半導体封止材,フェノール樹脂",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "5334",
+    "name": "日本特殊陶業",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "スパークプラグ,半導体パッケージ",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "5333",
+    "name": "日本ガイシ",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "NAS電池,碍子,セラミックス",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "5706",
+    "name": "三井金属鉱業",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "極薄銅箔,電子材料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "4109",
+    "name": "ステラケミファ",
+    "market": "TSE",
+    "sector_id": 14,
+    "summary": "高純度フッ酸,半導体洗浄材料",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "APD",
+    "name": "Air Products",
+    "market": "NYSE",
+    "sector_id": 13,
+    "summary": "産業ガス,半導体製造ガス",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "SHW",
+    "name": "Sherwin-Williams",
+    "market": "NYSE",
+    "sector_id": 14,
+    "summary": "塗料,コーティング",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ECL",
+    "name": "Ecolab",
+    "market": "NYSE",
+    "sector_id": 14,
+    "summary": "水処理,衛生ソリューション",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ALB",
+    "name": "Albemarle",
+    "market": "NYSE",
+    "sector_id": 14,
+    "summary": "リチウム,臭素,触媒",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "6954",
+    "name": "ファナック",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "CNC世界シェア50%,産業用ロボット",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6506",
+    "name": "安川電機",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "サーボモーター,産業用ロボット",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6861",
+    "name": "キーエンス",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "FAセンサー,営業利益率50%超",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6146",
+    "name": "ディスコ",
+    "market": "TSE",
+    "sector_id": 10,
+    "summary": "ダイシングソー世界シェア80%,研削装置",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6645",
+    "name": "オムロン",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "FA制御機器,協働ロボット",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6273",
+    "name": "SMC",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "空気圧機器世界シェア40%",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6702",
+    "name": "富士通",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "製造業向けDX,AIソリューション",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "8035",
+    "name": "東京エレクトロン",
+    "market": "TSE",
+    "sector_id": 10,
+    "summary": "コータ・デベロッパ世界シェア90%,エッチング装置",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6857",
+    "name": "アドバンテスト",
+    "market": "TSE",
+    "sector_id": 10,
+    "summary": "メモリテスター世界シェア50%超",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "7735",
+    "name": "SCREENホールディングス",
+    "market": "TSE",
+    "sector_id": 10,
+    "summary": "ウエハー洗浄装置世界シェア60%",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6920",
+    "name": "レーザーテック",
+    "market": "TSE",
+    "sector_id": 10,
+    "summary": "EUVマスク検査装置世界独占",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "ABBN.SW",
+    "name": "ABB Ltd",
+    "market": "SIX",
+    "sector_id": 28,
+    "summary": "産業用ロボット世界4大メーカー,電力・自動化",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ROK",
+    "name": "Rockwell Automation",
+    "market": "NYSE",
+    "sector_id": 28,
+    "summary": "北米FA制御首位,スマートファクトリー",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "EMR",
+    "name": "Emerson Electric",
+    "market": "NYSE",
+    "sector_id": 28,
+    "summary": "プロセスオートメーション,24年連続増配",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ISRG",
+    "name": "Intuitive Surgical",
+    "market": "NASDAQ",
+    "sector_id": 29,
+    "summary": "ダヴィンチ手術ロボット世界独占",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "6594",
+    "name": "日本電産",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "精密小型モーター世界首位,ロボット向け減速機",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6268",
+    "name": "ナブテスコ",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "産業用ロボット向け減速機世界シェア60%",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6324",
+    "name": "ハーモニック・ドライブ・システムズ",
+    "market": "TSE",
+    "sector_id": 28,
+    "summary": "波動歯車減速機世界独占的シェア",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6728",
+    "name": "ULVAC",
+    "market": "TSE",
+    "sector_id": 10,
+    "summary": "スパッタリング装置世界シェア70%,真空技術",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6752",
+    "name": "パナソニックHD",
+    "market": "TSE",
+    "sector_id": 30,
+    "summary": "蓄電池システム,テスラ向け車載電池",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "STEM",
+    "name": "Stem Inc",
+    "market": "NYSE",
+    "sector_id": 30,
+    "summary": "AIエネルギー貯蔵,系統用蓄電池ソフトウェア",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "FLNC",
+    "name": "Fluence Energy",
+    "market": "NASDAQ",
+    "sector_id": 30,
+    "summary": "大規模蓄電システム,シーメンス・AES合弁",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "1963",
+    "name": "日揮ホールディングス",
+    "market": "TSE",
+    "sector_id": 31,
+    "summary": "浮体式洋上風力EPC,エンジニアリング",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "1802",
+    "name": "大林組",
+    "market": "TSE",
+    "sector_id": 35,
+    "summary": "洋上風力建設,SEP船保有",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "1893",
+    "name": "五洋建設",
+    "market": "TSE",
+    "sector_id": 31,
+    "summary": "洋上風力基礎工事,海洋土木,SEP船保有",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "ORSTED.CO",
+    "name": "Ørsted",
+    "market": "CPH",
+    "sector_id": 31,
+    "summary": "洋上風力発電容量世界1位,運営・保守",
+    "currency": "DKK",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "7014",
+    "name": "名村造船所",
+    "market": "TSE",
+    "sector_id": 31,
+    "summary": "SEP船・CTV建造,洋上風力メンテナンス支援",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "9517",
+    "name": "イーレックス",
+    "market": "TSE",
+    "sector_id": 32,
+    "summary": "国内最大級バイオマス発電事業者",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "9519",
+    "name": "レノバ",
+    "market": "TSE",
+    "sector_id": 7,
+    "summary": "バイオマス,太陽光,風力,地熱の再エネ総合事業者",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "BE",
+    "name": "Bloom Energy",
+    "market": "NYSE",
+    "sector_id": 32,
+    "summary": "固体酸化物形燃料電池,バイオガス利用",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "9514",
+    "name": "エフオン",
+    "market": "TSE",
+    "sector_id": 33,
+    "summary": "地熱発電所運営,木質バイオマス",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "ENEL.MI",
+    "name": "Enel SpA",
+    "market": "BIT",
+    "sector_id": 33,
+    "summary": "イタリア電力大手,地熱発電容量世界トップクラス",
+    "currency": "EUR",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ORA",
+    "name": "Ormat Technologies",
+    "market": "NYSE",
+    "sector_id": 33,
+    "summary": "地熱発電設備・運営世界首位",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "1925",
+    "name": "大和ハウス工業",
+    "market": "TSE",
+    "sector_id": 34,
+    "summary": "太陽光発電所O&M,全国展開",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "6366",
+    "name": "千代田化工建設",
+    "market": "TSE",
+    "sector_id": 34,
+    "summary": "LNG・再エネプラントO&M",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "TPIC",
+    "name": "TPI Composites",
+    "market": "NASDAQ",
+    "sector_id": 34,
+    "summary": "風力ブレード製造・保守,アフターサービス",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "LRCX",
+    "name": "Lam Research",
+    "market": "NASDAQ",
+    "sector_id": 10,
+    "summary": "エッチング装置世界シェア50%",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "AMAT",
+    "name": "Applied Materials",
+    "market": "NASDAQ",
+    "sector_id": 10,
+    "summary": "半導体製造装置世界最大手,CVD・PVD装置",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "KLAC",
+    "name": "KLA Corporation",
+    "market": "NASDAQ",
+    "sector_id": 10,
+    "summary": "プロセス制御・検査装置世界シェア50%以上",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "TMO",
+    "name": "Thermo Fisher Scientific",
+    "market": "NYSE",
+    "sector_id": 9,
+    "summary": "ライフサイエンス機器世界最大手",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "DHR",
+    "name": "Danaher",
+    "market": "NYSE",
+    "sector_id": 9,
+    "summary": "診断・ライフサイエンス,バイオ医薬品製造",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "EW",
+    "name": "Edwards Lifesciences",
+    "market": "NYSE",
+    "sector_id": 9,
+    "summary": "心臓弁膜症治療デバイス世界独占的シェア",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "4523",
+    "name": "エーザイ",
+    "market": "TSE",
+    "sector_id": 5,
+    "summary": "アルツハイマー治療薬レケンビ,認知症領域",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "MDLZ",
+    "name": "Mondelez International",
+    "market": "NASDAQ",
+    "sector_id": 25,
+    "summary": "オレオ,リッツ等グローバルスナックブランド",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "HSY",
+    "name": "Hershey",
+    "market": "NYSE",
+    "sector_id": 25,
+    "summary": "北米チョコレート市場シェア40%",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "2282",
+    "name": "日本ハム",
+    "market": "TSE",
+    "sector_id": 25,
+    "summary": "食肉加工国内首位,代替肉",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "SLB",
+    "name": "Schlumberger",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "油田サービス世界最大手",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "COP",
+    "name": "ConocoPhillips",
+    "market": "NYSE",
+    "sector_id": 3,
+    "summary": "独立系石油・ガス生産世界最大手",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "1605",
+    "name": "INPEX",
+    "market": "TSE",
+    "sector_id": 3,
+    "summary": "日本最大の石油・ガス開発企業",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "9022",
+    "name": "JR東海",
+    "market": "TSE",
+    "sector_id": 2,
+    "summary": "東海道新幹線独占,リニア中央新幹線",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "LMT",
+    "name": "Lockheed Martin",
+    "market": "NYSE",
+    "sector_id": 23,
+    "summary": "世界最大の防衛企業,F-35戦闘機独占",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "RTX",
+    "name": "RTX Corporation",
+    "market": "NYSE",
+    "sector_id": 23,
+    "summary": "航空宇宙・防衛2位,プラット&ホイットニーエンジン",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "NOC",
+    "name": "Northrop Grumman",
+    "market": "NYSE",
+    "sector_id": 23,
+    "summary": "ステルス技術,B-21爆撃機独占",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "GD",
+    "name": "General Dynamics",
+    "market": "NYSE",
+    "sector_id": 23,
+    "summary": "戦車・潜水艦・ビジネスジェット",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "RKLB",
+    "name": "Rocket Lab",
+    "market": "NASDAQ",
+    "sector_id": 36,
+    "summary": "小型ロケット打ち上げ2位,衛星コンポーネント",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ASTS",
+    "name": "AST SpaceMobile",
+    "market": "NASDAQ",
+    "sector_id": 36,
+    "summary": "宇宙ベース携帯通信網,先行者優位",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "EQIX",
+    "name": "Equinix",
+    "market": "NASDAQ",
+    "sector_id": 37,
+    "summary": "データセンターREIT世界最大手,相互接続独占的",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "DLR",
+    "name": "Digital Realty",
+    "market": "NYSE",
+    "sector_id": 37,
+    "summary": "データセンターREIT2位,AI需要成長",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "A",
+    "name": "Agilent Technologies",
+    "market": "NYSE",
+    "sector_id": 38,
+    "summary": "分析・計測機器世界大手,ライフサイエンス",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "6965",
+    "name": "浜松ホトニクス",
+    "market": "TSE",
+    "sector_id": 38,
+    "summary": "光電子増倍管世界シェア90%,医療・半導体検査",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "7701",
+    "name": "島津製作所",
+    "market": "TSE",
+    "sector_id": 38,
+    "summary": "分析・計測機器,医療機器グローバル展開",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  },
+  {
+    "code": "UPS",
+    "name": "United Parcel Service",
+    "market": "NYSE",
+    "sector_id": 39,
+    "summary": "世界最大の配送会社,物流ネットワーク",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "FDX",
+    "name": "FedEx",
+    "market": "NYSE",
+    "sector_id": 39,
+    "summary": "国際宅配便2位,航空貨物",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "ENTG",
+    "name": "Entegris",
+    "market": "NASDAQ",
+    "sector_id": 40,
+    "summary": "半導体製造用高純度化学品・フィルター世界首位",
+    "currency": "USD",
+    "is_etf": false,
+    "trading_unit": 1
+  },
+  {
+    "code": "4186",
+    "name": "東京応化工業",
+    "market": "TSE",
+    "sector_id": 40,
+    "summary": "フォトレジスト世界シェア25%,EUV対応",
+    "currency": "JPY",
+    "is_etf": false,
+    "trading_unit": 100
+  }
+]

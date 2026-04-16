@@ -5,6 +5,8 @@ from app.models.balance_sheet import BalanceSheet
 from app.models.cashflow import CashFlow
 from app.models.income_stmt import IncomeStatement
 from app.models.quarterly_income_stmt import QuarterlyIncomeStatement
+from app.models.sector import Sector
+from app.models.white_list import WhiteList
 
 __all__ = [
     "Stock",
@@ -14,4 +16,6 @@ __all__ = [
     "CashFlow",
     "IncomeStatement",
     "QuarterlyIncomeStatement",
+    "Sector",
+    "WhiteList",
 ]

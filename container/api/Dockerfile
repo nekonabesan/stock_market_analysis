@@ -28,6 +28,7 @@ RUN uv sync --no-dev --no-install-project
 # Copy application source and migration config
 COPY backend/app ./app
 COPY backend/migrations ./migrations
+COPY backend/seeds ./seeds
 COPY backend/alembic.ini ./
 
 EXPOSE 8000

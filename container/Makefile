@@ -1,4 +1,4 @@
-.PHONY: build build-clean start stop logs migrate seed test
+.PHONY: build build-clean start stop logs migrate seed init test
 
 COMPOSE := docker compose
 MIGRATION_MSG ?= auto_migration
@@ -13,7 +13,7 @@ build-clean:
 	$(COMPOSE) build --no-cache
 
 start:
-	$(COMPOSE) up -d
+	$(COMPOSE) up -d --no-build
 
 stop:
 	$(COMPOSE) down
@@ -27,6 +27,9 @@ migrate:
 
 seed:
 	$(COMPOSE) exec api uv run python -m seeds.run
+
+init:
+	$(COMPOSE) exec api uv run python -m app.batch.init_market_data
 
 test:
 	$(COMPOSE) exec api uv run --dev pytest $(filter-out $@,$(MAKECMDGOALS)) -v

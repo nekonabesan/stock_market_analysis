@@ -49,7 +49,9 @@ class BalanceSheet(Base):
     other_investments: Mapped[float] = mapped_column(nullable=True)
     investmentin_financial_assets: Mapped[float] = mapped_column(nullable=True)
     available_for_sale_securities: Mapped[float] = mapped_column(nullable=True)
-    financial_assets_designatedas_fair_value_through_profitor_loss_total: Mapped[float] = mapped_column(nullable=True)
+    financial_assets_designatedas_fair_value_through_profitor_loss_total: Mapped[float] = mapped_column(
+        "financial_assets_designatedas_fair_value_through_profitor_loss_", nullable=True
+    )
     long_term_equity_investment: Mapped[float] = mapped_column(nullable=True)
     investmentsin_joint_venturesat_cost: Mapped[float] = mapped_column(nullable=True)
     investmentsin_associatesat_cost: Mapped[float] = mapped_column(nullable=True)
