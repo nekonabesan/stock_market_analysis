@@ -20,6 +20,7 @@ class _MockStocksServiceSuccess:
                 "code": "7203",
                 "market": "TSE",
                 "name": "TOYOTA",
+                "currency": "JPY",
             }
         ]
 
@@ -57,9 +58,12 @@ def test_get_stocks_returns_200_when_service_success(monkeypatch):
     client = TestClient(app)
     response = client.get("/api/v1/stocks/")
 
+
     assert response.status_code == 200
-    assert len(response.json()["results"]) == 1
-    assert response.json()["results"][0]["code"] == "7203"
+    results = response.json()["results"]
+    assert len(results) == 1
+    assert results[0]["code"] == "7203"
+    assert results[0]["currency"] == "JPY"
 
     app.dependency_overrides.clear()
 

@@ -1,0 +1,21 @@
+[
+    { "market": "TSE", "currency": "JPY" },
+    { "market": "CSE", "currency": "DKK" },
+    { "market": "LSE", "currency": "GBP" },
+    { "market": "STO", "currency": "SEK" },
+    { "market": "NYSE", "currency": "USD" },
+    { "market": "NASDAQ", "currency": "USD" },
+    { "market": "HKEX", "currency": "HKD" },
+    { "market": "SSE", "currency": "CNY" },
+    { "market": "SZSE", "currency": "CNY" },
+    { "market": "ASX", "currency": "AUD" },
+    { "market": "TSX", "currency": "CAD" },
+    { "market": "SIX", "currency": "CHF" },
+    { "market": "FWB", "currency": "EUR" },
+    { "market": "BSE", "currency": "INR" },
+    { "market": "KRX", "currency": "KRW" },
+    { "market": "BIT", "currency": "EUR" },
+    { "market": "CPH", "currency": "DKK" },
+    { "market": "EPA", "currency": "EUR" },
+    { "market": "XETRA", "currency": "EUR" }
+]

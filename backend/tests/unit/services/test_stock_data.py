@@ -1,3 +1,24 @@
+import types
+
+class TestStockDataServiceCurrencyId:
+    def test_get_currency_id_returns_id(self, mock_db):
+        # Arrange
+        service = StockDataService(db_session=mock_db)
+        # market="TSE"に対してid=1を返すようにMock
+        mock_db.execute.return_value.scalar_one_or_none.return_value = 1
+        # Act
+        result = service._get_currency_id("TSE")
+        # Assert
+        assert result == 1
+
+    def test_get_currency_id_returns_none_if_market_none(self, mock_db):
+        service = StockDataService(db_session=mock_db)
+        assert service._get_currency_id(None) is None
+
+    def test_get_currency_id_returns_none_if_not_found(self, mock_db):
+        service = StockDataService(db_session=mock_db)
+        mock_db.execute.return_value.scalar_one_or_none.return_value = None
+        assert service._get_currency_id("NOEXIST") is None
 import datetime
 from unittest.mock import MagicMock, patch
 

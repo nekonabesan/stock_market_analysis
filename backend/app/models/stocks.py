@@ -12,6 +12,7 @@ class Stock(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     code: Mapped[str] = mapped_column(String(16), nullable=False)
     market: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    currency_id: Mapped[int | None] = mapped_column(nullable=True)
     name: Mapped[str | None] = mapped_column(String(255), nullable=True)
     sector: Mapped[str | None] = mapped_column(String(128), nullable=True)
     memo: Mapped[str | None] = mapped_column(String(1024), nullable=True)

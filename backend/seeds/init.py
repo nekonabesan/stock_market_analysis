@@ -27,3 +27,6 @@ def load_sector_records() -> list[dict]:
 
 def load_white_list_records() -> list[dict]:
 	return _load_json_records("trn_white_list.json")
+
+def load_currency_records() -> list[dict]:
+	return _load_json_records("mst_currency.json")

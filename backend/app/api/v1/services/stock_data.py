@@ -8,6 +8,7 @@ from app.api.v1.infra.get_market_data import GetMarketData
 from app.core.logger import logger
 from app.models.stocks import Stock
 from app.models.trn_stock_price import StockPrice
+from app.models.currency import Currency
 
 get_market_data = GetMarketData(data_path=Path("/tmp"))
 
@@ -33,6 +34,7 @@ YF_MARKET_SUFFIX_MAP: dict[str, str] = {
 
 
 class StockDataService:
+
     def __init__(self, db_session):
         """
         StockDataServiceを初期化する
@@ -70,6 +72,8 @@ class StockDataService:
             # 移動平均線・MACD・RCI 等のウォームアップのため、yfinance 取得は start の約30営業日前から行う。
             # DB には warmup 分も含めて保存し、time_series_data エンドポイントの前倒しクエリで活用させる。
             fetch_start = start - dt.timedelta(days=MA_WARMUP_CALENDAR_DAYS)
+            # テーブルmst_currencyから市場コードに対応する通貨IDを取得する。
+            currency_id = self._get_currency_id(market)
 
             # stock登録と価格UPSERTを単一トランザクションで実行する。
             with self.db_session.begin():
@@ -86,7 +90,7 @@ class StockDataService:
                     fetched_rows = self._fetch_yfinance(code, market, fetch_start, end)
                     if fetched_rows:
                         # TODO実装: yfinance で取得できた場合は mst_stock へ登録する。
-                        self._upsert_stock(code, market)
+                        self._upsert_stock(code, market, currency_id)
                     else:
                         # TODO実装: 未登録かつ外部取得不能なら 404 を返す。
                         logger.warning(f"No market data found for code={code}, market={market}")
@@ -159,12 +163,13 @@ class StockDataService:
             stmt = stmt.where(Stock.market == market)
         return self.db_session.execute(stmt.limit(1)).first() is not None
 
-    def _upsert_stock(self, code: str, market: str | None) -> None:
+    def _upsert_stock(self, code: str, market: str | None, currency_id: int | None) -> None:
         """
         mst_stockテーブルへ銘柄情報を登録する
         Args:
             code (str): 銘柄コード
             market (str | None): 市場コード（Noneの場合は市場不特定）
+            currency_id (int | None): 通貨ID（Noneの場合は未設定）
         Returns:
             None: 登録処理のみ行う
         """
@@ -172,7 +177,7 @@ class StockDataService:
         if self._exists_stock(code, market):
             return
 
-        self.db_session.add(Stock(code=code, market=market))
+        self.db_session.add(Stock(code=code, market=market, currency_id=currency_id))
 
     def _fetch_yfinance(self, code: str, market: str | None, start: dt.date, end: dt.date) -> list[dict]:
         """
@@ -372,5 +377,21 @@ class StockDataService:
         except Exception as e:
             logger.error(f"Error fetching {code}: {e}")
             raise RuntimeError(f"stock data fetch failed for {code}") from e
+        
+    def _get_currency_id(self, market: str | None) -> int | None:
+        """
+        mst_currencyテーブルから市場コードに対応する通貨IDを取得する
+        Args:
+            market (str | None): 市場コード
+        Returns:
+            int | None: 通貨ID（見つからなければNone）
+        """
+        if market is None:
+            return None
+        
+        row = self.db_session.execute(
+            select(Currency.id).where(Currency.market == market)
+        ).scalar_one_or_none()
+        return row
 
         

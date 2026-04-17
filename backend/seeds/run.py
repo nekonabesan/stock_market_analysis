@@ -5,7 +5,43 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.db.session import SessionLocal
 from app.models.sector import Sector
 from app.models.white_list import WhiteList
-from seeds.init import load_sector_records, load_white_list_records
+from app.models.currency import Currency
+from seeds.init import load_sector_records, load_white_list_records, load_currency_records
+def _upsert_currency_records(records: list[dict]) -> tuple[int, int]:
+	inserted = 0
+	updated = 0
+
+	deduped: dict[str, dict] = {}
+	for record in records:
+		market = record.get("market")
+		if not market:
+			continue
+		deduped[market] = record
+
+	with SessionLocal() as db:
+		for market, record in deduped.items():
+			market = record.get("market")
+			currency = record.get("currency")
+			if not market:
+				continue
+
+			row = db.query(Currency).filter_by(market=market).first()
+			if row is None:
+				db.add(Currency(market=market, currency=currency))
+				inserted += 1
+				continue
+
+			changed = False
+			if row.currency != currency:
+				row.currency = currency
+				changed = True
+
+			if changed:
+				updated += 1
+
+		db.commit()
+
+	return inserted, updated
 
 
 def _upsert_sector_records(records: list[dict]) -> tuple[int, int]:
@@ -91,16 +127,19 @@ def main() -> None:
 	try:
 		sector_records = load_sector_records()
 		white_list_records = load_white_list_records()
+		currency_records = load_currency_records()
 
 		sector_inserted, sector_updated = _upsert_sector_records(sector_records)
 		wl_inserted, wl_updated = _upsert_white_list_records(white_list_records)
+		currency_inserted, currency_updated = _upsert_currency_records(currency_records)
 	except SQLAlchemyError as e:
 		raise RuntimeError("seed execution failed") from e
 
 	print(
 		"seed completed "
 		f"(mst_sector: +{sector_inserted} / ~{sector_updated}, "
-		f"trn_white_list: +{wl_inserted} / ~{wl_updated})"
+		f"trn_white_list: +{wl_inserted} / ~{wl_updated}, "
+		f"mst_currency: +{currency_inserted} / ~{currency_updated})"
 	)
 
 

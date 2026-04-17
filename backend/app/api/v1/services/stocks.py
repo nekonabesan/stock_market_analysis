@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.logger import logger
 from app.models.stocks import Stock
+from app.models.currency import Currency
 
 class StocksService:
     def __init__(self, db_session: Session):
@@ -34,16 +35,24 @@ class StocksService:
         
     def _fetch_stocks(self) -> list[dict] | None:
         """
-        DBから全銘柄を取得する内部メソッド
+        DBから全銘柄を取得し、通貨名も付与する内部メソッド
 
         Returns:
             list[dict] | None: 取得した株価データ（存在しない場合はNone）
         """
-        stmt = select(Stock)
-        result = self.db_session.execute(stmt).scalars().all()
+        stmt = (
+            select(Stock, Currency.currency)
+            .join(Currency, Stock.currency_id == Currency.id, isouter=True)
+        )
+        result = self.db_session.execute(stmt).all()
         if not result:
             return None
-        return [self._to_dict(stock) for stock in result]
+        stocks = []
+        for stock, currency in result:
+            stock_dict = self._to_dict(stock)
+            stock_dict["currency"] = currency
+            stocks.append(stock_dict)
+        return stocks
 
     def _to_dict(self, stock: Stock) -> dict:
         """Stockモデルをdictへ変換する。"""

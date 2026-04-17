@@ -7,6 +7,7 @@ from app.models.income_stmt import IncomeStatement
 from app.models.quarterly_income_stmt import QuarterlyIncomeStatement
 from app.models.sector import Sector
 from app.models.white_list import WhiteList
+from app.models.currency import Currency
 
 __all__ = [
     "Stock",
@@ -18,4 +19,5 @@ __all__ = [
     "QuarterlyIncomeStatement",
     "Sector",
     "WhiteList",
+    "Currency",
 ]
