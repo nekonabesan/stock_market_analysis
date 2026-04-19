@@ -1,45 +1,44 @@
-from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+
 from app.db.session import get_db
-from app.schemas.time_series_data import (
-    TimeSeriesStockDataGetRequest,
-    TimeSeriesStockDataGetResponse,
-    TimeSeriesCommodityDataGetRequest,
-    TimeSeriesCommodityDataGetResponse
+from app.schemas.commodity_data import (
+    CommodityDataUpsertRequest,
+    CommodityDataUpsertResponse,
+    CommodityDataGetRequest,
+    CommodityDataGetResponse
 )
-from app.api.v1.services.time_series_stock_data import TimeSeriesStockDataService
-from app.api.v1.services.time_series_commodity_data import TimeSeriesCommodityDataService
+from app.api.v1.services.commodity_data import CommodityDataService
 
 router = APIRouter()
 
-@router.get(
-    "/stock/",
-    response_model=TimeSeriesStockDataGetResponse,
+@router.post(
+    "/",
+    response_model=CommodityDataUpsertResponse,
     status_code=status.HTTP_200_OK,
-    summary="銘柄コードの株価データを取得",
-    description="指定した銘柄コードの株価データをDBから取得する。",
+    summary="銘柄コードの株価データをUPSERT",
+    description="指定した銘柄コードの株価データを取得し、DBにUPDATE/INSERTする。",
 )
-def get_time_stock_series_data(
-    request: TimeSeriesStockDataGetRequest = Depends(),
+def upsert_commodity_data(
+    request: CommodityDataUpsertRequest,
     db: Session = Depends(get_db),
-) -> TimeSeriesStockDataGetResponse:
+) -> CommodityDataUpsertResponse:
     try:
-        service = TimeSeriesStockDataService(db)
-        data = service.get_time_series_data(
+        service = CommodityDataService(db)
+        success = service.update_commodity_data(
             code=request.code,
             market=request.market,
             start=request.start,
             end=request.end,
         )
-        if not data:
+        if not success:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Stock data not found",
+                detail="Commodity data not found or could not be fetched",
             )
 
-        return TimeSeriesStockDataGetResponse(
-            results=data,
+        return CommodityDataUpsertResponse(
+            result=success,
         )
     except HTTPException:
         raise
@@ -48,44 +47,38 @@ def get_time_stock_series_data(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e),
         )
-    except RuntimeError as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e),
-        ) from e
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An unexpected error occurred",
         ) from e
-    
 
 @router.get(
-    "/commodity/",
-    response_model=TimeSeriesCommodityDataGetResponse,
+    "/",
+    response_model=CommodityDataGetResponse,
     status_code=status.HTTP_200_OK,
-    summary="銘柄コードのコモディティデータを取得",
-    description="指定した銘柄コードのコモディティデータをDBから取得する。",
+    summary="銘柄コードの株価データを取得",
+    description="指定した銘柄コードの株価データをDBから取得する。",
 )
-def get_time_commodity_series_data(
-    request: TimeSeriesCommodityDataGetRequest = Depends(),
+def get_commodity_data(
+    request: CommodityDataGetRequest = Depends(),
     db: Session = Depends(get_db),
-) -> TimeSeriesCommodityDataGetResponse:
+) -> CommodityDataGetResponse:
     try:
-        service = TimeSeriesCommodityDataService(db)
-        data = service.get_time_series_data(
+        service = CommodityDataService(db)
+        data = service.get_commodity_data(
             code=request.code,
             market=request.market,
             start=request.start,
             end=request.end,
         )
-        if not data:
+        if data is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Commodity data not found",
             )
 
-        return TimeSeriesCommodityDataGetResponse(
+        return CommodityDataGetResponse(
             results=data,
         )
     except HTTPException:

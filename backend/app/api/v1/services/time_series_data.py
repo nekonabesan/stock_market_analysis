@@ -24,32 +24,16 @@ class TimeSeriesDataService:
 
     def get_time_series_data(
         self,
-        code: str,
-        market: str | None,
-        start: dt.date | None,
-        end: dt.date | None,
-        db: Session | None = None,
+        df: pd.DataFrame
     ) -> list[dict]:
+        """
+        DataFrameを受けてテクニカル指標を導出し、dictリストで返す
+        Args:
+            df (pd.DataFrame): OHLCV等を含む時系列データ
+        Returns:
+            list[dict]: 指標付き時系列データ
+        """
         try:
-            if start is None or end is None:
-                raise ValueError("start and end are required")
-            if start > end:
-                raise ValueError("start must be less than or equal to end")
-
-            session = db or self.db_session
-            data_acquisition_start_date = start - dt.timedelta(days=300)
-            query = (session.query(StockPrice)
-                     .filter(StockPrice.stock_code == code)
-                     .filter(StockPrice.date >= data_acquisition_start_date)
-                     .filter(StockPrice.date <= end))
-            if market is not None:
-                query = query.filter(StockPrice.stock_market == market)
-
-            data = query.all()
-            if not data:
-                return []
-
-            df = pd.DataFrame([self._row_to_dict(record) for record in data])
             if df.empty or "date" not in df.columns or "close" not in df.columns:
                 return []
 
@@ -100,9 +84,6 @@ class TimeSeriesDataService:
 
             # 上昇条件を導出
             df["rising_condition"] = self._check_rising_condition(df)
-
-            # 指定された期間でフィルタリング
-            df = df[(df["date"] >= start) & (df["date"] <= end)]
 
             return df.to_dict(orient="records")
 

@@ -45,6 +45,7 @@ class StockDataService:
         """
         self.db_session = db_session
 
+
     def update_stock_data (
             self,
             code: str,
@@ -63,56 +64,50 @@ class StockDataService:
             bool: 更新処理の実行結果
         """
         try:
-            # 期間指定は必須で扱い、業務的に不正な期間は先に弾く。
             if start is None or end is None:
                 raise ValueError("start and end are required")
             if start > end:
                 raise ValueError("start must be less than or equal to end")
 
-            # 移動平均線・MACD・RCI 等のウォームアップのため、yfinance 取得は start の約30営業日前から行う。
-            # DB には warmup 分も含めて保存し、time_series_data エンドポイントの前倒しクエリで活用させる。
             fetch_start = start - dt.timedelta(days=MA_WARMUP_CALENDAR_DAYS)
-            # テーブルmst_currencyから市場コードに対応する通貨IDを取得する。
             currency_id = self._get_currency_id(market)
 
-            # stock登録と価格UPSERTを単一トランザクションで実行する。
-            with self.db_session.begin():
-                # まず指定期間（warmup 含む）のDB既存データを取得し、欠損判定の基準を作る。
-                db_rows = self._fetch_trn_stock_price_rows(code, market, fetch_start, end)
-                db_dates = {row.date for row in db_rows}
+            db_rows = self._fetch_trn_stock_price_rows(code, market, fetch_start, end)
+            db_dates = {row.date for row in db_rows}
 
-                # TODO実装: stock テーブルに code + market の組み合わせがあるか確認する。
-                stock_exists = self._exists_stock(code, market)
-                fetched_rows: list[dict] = []
+            stock_exists = self._exists_stock(code, market)
+            fetched_rows: list[dict] = []
 
-                # TODO実装: 未登録なら yfinance 取得を試行し、結果に応じて登録 or 404 を出し分ける。
-                if not stock_exists:
-                    fetched_rows = self._fetch_yfinance(code, market, fetch_start, end)
-                    if fetched_rows:
-                        # TODO実装: yfinance で取得できた場合は mst_stock へ登録する。
-                        self._upsert_stock(code, market, currency_id)
-                    else:
-                        # TODO実装: 未登録かつ外部取得不能なら 404 を返す。
-                        logger.warning(f"No market data found for code={code}, market={market}")
-                        return False
 
-                # 欠損判定のため、未取得ならここで取得する。
-                if not fetched_rows:
-                    fetched_rows = self._fetch_yfinance(code, market, fetch_start, end)
+            if not stock_exists:
+                fetched_rows = self._fetch_yfinance(code, market, fetch_start, end)
+                logger.info(f"[DEBUG] fetch_yfinance({code}, {market}, {fetch_start}, {end}) -> {len(fetched_rows)} rows")
+                if fetched_rows:
+                    self._upsert_stock(code, market, currency_id)
+                else:
+                    logger.warning(f"No market data found for code={code}, market={market}")
+                    return False
 
-                normalized_rows = self._normalize_rows(fetched_rows)
-                fetched_dates = {row["date"] for row in normalized_rows if row["date"] is not None}
-                missing_dates = fetched_dates - db_dates
+            if not fetched_rows:
+                fetched_rows = self._fetch_yfinance(code, market, fetch_start, end)
+                logger.info(f"[DEBUG] fetch_yfinance({code}, {market}, {fetch_start}, {end}) -> {len(fetched_rows)} rows (fallback)")
 
-                # 期間内が空、または一部欠損なら OHLCV をUPSERTして整合させる。
-                if not db_rows or missing_dates:
-                    self._upsert_trn_stock_price(code, market, normalized_rows)
+            normalized_rows = self._normalize_rows(fetched_rows)
+            logger.info(f"[DEBUG] normalized_rows: {len(normalized_rows)} rows, sample: {normalized_rows[:2] if normalized_rows else None}")
+            fetched_dates = {row["date"] for row in normalized_rows if row["date"] is not None}
+            missing_dates = fetched_dates - db_dates
 
-            # 更新処理が最後まで完了した場合は成功を返す。
+            if not db_rows or missing_dates:
+                logger.info(f"[DEBUG] upsert_trn_stock_price({code}, {market}, rows={len(normalized_rows)})")
+                self._upsert_trn_stock_price(code, market, normalized_rows)
+            # トランザクションをCOMMIT
+            self.db_session.commit()
+
             return True
         except ValueError:
             raise
         except Exception as e:
+            self.db_session.rollback()
             logger.error(f"Error fetching {code}: {e}")
             raise RuntimeError(f"stock data update failed for {code}") from e
         
@@ -192,6 +187,7 @@ class StockDataService:
         """
         try:
             ticker = self._build_yfinance_ticker(code=code, market=market)
+            logger.info(f"[DEBUG] yfinance ticker: {ticker}")
             return get_market_data.get_data_from_yfinance(
                 ticker,
                 start=start.strftime("%Y-%m-%d"),

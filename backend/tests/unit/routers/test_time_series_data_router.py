@@ -61,12 +61,12 @@ class _MockTimeSeriesDataServiceUnexpectedError:
 def test_get_time_series_data_returns_200_when_service_success(monkeypatch):
     from app.api.v1.routers import time_series_data as router_module
 
-    monkeypatch.setattr(router_module, "TimeSeriesDataService", _MockTimeSeriesDataServiceSuccess)
+    monkeypatch.setattr(router_module, "TimeSeriesStockDataService", _MockTimeSeriesDataServiceSuccess)
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data",
+        "/api/v1/time_series_data/stock/",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -79,12 +79,12 @@ def test_get_time_series_data_returns_200_when_service_success(monkeypatch):
 def test_get_time_series_data_returns_404_when_service_returns_empty_list(monkeypatch):
     from app.api.v1.routers import time_series_data as router_module
 
-    monkeypatch.setattr(router_module, "TimeSeriesDataService", _MockTimeSeriesDataServiceNotFound)
+    monkeypatch.setattr(router_module, "TimeSeriesStockDataService", _MockTimeSeriesDataServiceNotFound)
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data",
+        "/api/v1/time_series_data/stock/",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -97,11 +97,11 @@ def test_get_time_series_data_returns_404_when_service_returns_empty_list(monkey
 def test_get_time_series_data_returns_400_when_service_raises_value_error(monkeypatch):
     from app.api.v1.routers import time_series_data as router_module
 
-    monkeypatch.setattr(router_module, "TimeSeriesDataService", _MockTimeSeriesDataServiceValueError)
+    monkeypatch.setattr(router_module, "TimeSeriesStockDataService", _MockTimeSeriesDataServiceValueError)
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
-    response = client.get("/api/v1/time_series_data", params={"code": "7203.T"})
+    response = client.get("/api/v1/time_series_data/stock/", params={"code": "7203.T"})
 
     assert response.status_code == 400
     assert response.json()["detail"] == "start and end are required"
@@ -112,12 +112,12 @@ def test_get_time_series_data_returns_400_when_service_raises_value_error(monkey
 def test_get_time_series_data_returns_500_when_service_raises_runtime_error(monkeypatch):
     from app.api.v1.routers import time_series_data as router_module
 
-    monkeypatch.setattr(router_module, "TimeSeriesDataService", _MockTimeSeriesDataServiceRuntimeError)
+    monkeypatch.setattr(router_module, "TimeSeriesStockDataService", _MockTimeSeriesDataServiceRuntimeError)
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data",
+        "/api/v1/time_series_data/stock/",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 
@@ -130,12 +130,12 @@ def test_get_time_series_data_returns_500_when_service_raises_runtime_error(monk
 def test_get_time_series_data_returns_500_when_service_raises_unexpected_error(monkeypatch):
     from app.api.v1.routers import time_series_data as router_module
 
-    monkeypatch.setattr(router_module, "TimeSeriesDataService", _MockTimeSeriesDataServiceUnexpectedError)
+    monkeypatch.setattr(router_module, "TimeSeriesStockDataService", _MockTimeSeriesDataServiceUnexpectedError)
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
     response = client.get(
-        "/api/v1/time_series_data",
+        "/api/v1/time_series_data/stock/",
         params={"code": "7203.T", "start": "2024-01-01", "end": "2024-01-31"},
     )
 

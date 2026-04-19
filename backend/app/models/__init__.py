@@ -8,6 +8,8 @@ from app.models.quarterly_income_stmt import QuarterlyIncomeStatement
 from app.models.sector import Sector
 from app.models.white_list import WhiteList
 from app.models.currency import Currency
+from app.models.commodities import Commodities
+from app.models.commodity_price import CommodityPrice
 
 __all__ = [
     "Stock",
@@ -20,4 +22,6 @@ __all__ = [
     "Sector",
     "WhiteList",
     "Currency",
+    "Commodities",
+    "CommodityPrice",
 ]

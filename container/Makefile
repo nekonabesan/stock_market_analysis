@@ -1,4 +1,6 @@
-.PHONY: build build-clean start stop logs migrate seed init test
+.PHONY: build build-clean start stop logs migrate seed init test init-migration
+init-migration:
+	$(COMPOSE) exec api uv run alembic revision --autogenerate -m "init"
 
 COMPOSE := docker compose
 MIGRATION_MSG ?= auto_migration

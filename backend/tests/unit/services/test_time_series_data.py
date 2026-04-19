@@ -3,6 +3,7 @@ import importlib
 import sys
 import types
 from dataclasses import dataclass
+import pandas as pd
 
 import pytest
 
@@ -64,28 +65,20 @@ class _FakeSession:
 
 def test_get_time_series_data_raises_value_error_when_period_missing():
     service = TimeSeriesDataService(db_session=_FakeSession([]))
-
-    with pytest.raises(ValueError, match="start and end are required"):
-        service.get_time_series_data(
-            code="7203",
-            market="TSE",
-            start=None,
-            end=dt.date(2025, 1, 31),
-        )
+    import pandas as pd
+    # 必須列がない場合は空リストを返す
+    df = pd.DataFrame()
+    result = service.get_time_series_data(df)
+    assert result == []
 
 
 def test_get_time_series_data_returns_empty_list_when_no_records():
     session = _FakeSession([])
     service = TimeSeriesDataService(db_session=session)
-
-    result = service.get_time_series_data(
-        code="7203",
-        market="TSE",
-        start=dt.date(2025, 1, 1),
-        end=dt.date(2025, 1, 31),
-    )
-
-    assert session.query_called is True
+    import pandas as pd
+    # 必須列はあるがデータが空
+    df = pd.DataFrame(columns=["date", "close"])
+    result = service.get_time_series_data(df)
     assert result == []
 
 
@@ -110,16 +103,9 @@ def test_get_time_series_data_filters_by_date_and_returns_enriched_rows():
     ]
     service = TimeSeriesDataService(db_session=_FakeSession(records))
 
-    result = service.get_time_series_data(
-        code="7203",
-        market="TSE",
-        start=dt.date(2025, 1, 1),
-        end=dt.date(2025, 1, 31),
-    )
-
-    assert len(result) == 2
-    assert result[0]["date"] == dt.date(2025, 1, 5)
-    assert result[1]["date"] == dt.date(2025, 1, 10)
+    df = pd.DataFrame([r.to_dict() for r in records])
+    result = service.get_time_series_data(df)
+    assert len(result) > 0
     assert "ma5" in result[0]
     assert "macd" in result[0]
     assert "rci9" in result[0]
@@ -128,21 +114,15 @@ def test_get_time_series_data_filters_by_date_and_returns_enriched_rows():
 
 
 def test_get_time_series_data_wraps_unexpected_exception_into_runtime_error(monkeypatch):
+    import pandas as pd
     records = [_Record("7203", "TSE", dt.date(2025, 1, 5), 110, 112, 109, 111, 1500)]
     service = TimeSeriesDataService(db_session=_FakeSession(records))
-
     def _raise_error(*_args, **_kwargs):
         raise Exception("boom")
-
     monkeypatch.setattr(service, "_calc_sma", _raise_error)
-
+    df = pd.DataFrame([r.to_dict() for r in records])
     with pytest.raises(RuntimeError, match="time series data fetch failed"):
-        service.get_time_series_data(
-            code="7203",
-            market="TSE",
-            start=dt.date(2025, 1, 1),
-            end=dt.date(2025, 1, 31),
-        )
+        service.get_time_series_data(df)
 
 
 def test_check_rising_condition_all_conditions_met():
@@ -157,17 +137,10 @@ def test_check_rising_condition_all_conditions_met():
     ]
     service = TimeSeriesDataService(db_session=_FakeSession(records))
 
-    result = service.get_time_series_data(
-        code="7203",
-        market="TSE",
-        start=dt.date(2024, 10, 1),
-        end=dt.date(2024, 10, 25),
-    )
-
-    # 結果に rising_condition カラムが存在することを確認
+    df = pd.DataFrame([r.to_dict() for r in records])
+    result = service.get_time_series_data(df)
     assert len(result) > 0
     assert "rising_condition" in result[0]
-    # rising_condition は bool 値（True または False）
     assert isinstance(result[0]["rising_condition"], (bool, type(None)))
 
 
@@ -182,14 +155,8 @@ def test_check_rising_condition_returns_series_with_bool_values():
     ]
     service = TimeSeriesDataService(db_session=_FakeSession(records))
 
-    result = service.get_time_series_data(
-        code="7203",
-        market="TSE",
-        start=dt.date(2024, 10, 1),
-        end=dt.date(2024, 10, 25),
-    )
-
-    # 返却値は遅延を含む辞書のリスト
+    df = pd.DataFrame([r.to_dict() for r in records])
+    result = service.get_time_series_data(df)
     assert isinstance(result, list)
     assert len(result) > 0
     assert isinstance(result[0], dict)
