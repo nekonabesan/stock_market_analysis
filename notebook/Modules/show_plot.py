@@ -140,3 +140,88 @@ class ShowPlot:
 
         # グラフを表示
         fig.show()
+
+    def create_basic_chart(
+            self,
+            df: pd.DataFrame, 
+            name: str | None = None,
+            code: str | None = None,
+            start: str | None = None,
+            end: str | None = None
+        ) -> go.Figure:
+        """
+        APIから取得したデータをもとに基本的なローソク足チャートを作成する
+        /api/v1/time_series_data/stock/
+        /api/v1/time_series_data/commodity/
+
+        Args:
+            df (pd.DataFrame): 株価データを含むDataFrame。'Open'、'High'、'Low'、'Close'列が必要。
+            name (str): 銘柄名。
+            code (str): 銘柄コード。
+            start (str): 開始日（YYYY-MM-DD形式）。
+            end (str): 終了日（YYYY-MM-DD形式）。
+        Returns:
+        """
+        # date列をインデックスに設定してスライス
+        df = df.set_index(pd.to_datetime(df["date"])).sort_index()
+        df = df[start:end]
+
+        # レイアウト設定
+        layout = {
+                "height": 900,
+                "title": {"x": 0.5, "text": f"{name or code} {code}"},
+                "xaxis": {"rangeslider": {"visible": False}, "type": "category"},
+                "yaxis1": {"domain": [.36, 1.0], "title": "価格（円）", "side": "left", "tickformat": ","},
+                "yaxis2": {"domain": [.30, .36]},
+                "yaxis3": {"domain": [.20, .295], "title": "MACD", "side": "right"},
+                "yaxis4": {"domain": [.10, .195], "title": "RCI", "side": "right"},
+                "yaxis5": {"domain": [.0, .095], "title": "Volume", "side": "right"},
+                "plot_bgcolor": "light blue",
+        }
+
+        # データの設定
+        data = [
+                go.Candlestick(
+                    yaxis="y1",
+                    x=df.index,
+                    open=df["open"],
+                    high=df["high"],
+                    low=df["low"],
+                    close=df["close"],
+                    increasing_line_color="red",
+                    decreasing_line_color="gray",
+                    name=code,
+                ),
+                go.Scatter(yaxis="y1", x=df.index, y=df["ma5"], name="MA5", line={"color": "royalblue", "width": 1.2}),
+                go.Scatter(yaxis="y1", x=df.index, y=df["ma25"], name="MA25", line={"color": "lightseagreen", "width": 1.2}),
+                go.Scatter(yaxis="y1", x=df.index, y=df["upper2"], name="", line={"color": "lavender", "width": 0}),
+                go.Scatter(
+                    yaxis="y1",
+                    x=df.index,
+                    y=df["lower2"],
+                    name="BB",
+                    line={"color": "lavender", "width": 0},
+                    fill="tonexty",
+                    fillcolor="rgba(170,170,170,.2)",
+                ),
+                go.Scatter(yaxis="y3", x=df.index, y=df["macd"], name="macd", line={"color": "magenta", "width": 1}),
+                go.Scatter(yaxis="y3", x=df.index, y=df["macd_signal"], name="signal", line={"color": "green", "width": 1}),
+                go.Bar(yaxis="y3", x=df.index, y=df["hist"], name="histgram", marker={"color": "slategray"}),
+                go.Scatter(yaxis="y4", x=df.index, y=df["rci9"], name="RCI9", line={"color": "magenta", "width": 1}),
+                go.Scatter(yaxis="y4", x=df.index, y=df["rci26"], name="RCI26", line={"color": "green", "width": 1}),
+                go.Bar(yaxis="y5", x=df.index, y=df["volume"], name="Volume", marker=dict(color="slategray")),
+        ]
+
+        # Figure作成
+        fig = go.Figure(data=data, layout=go.Layout(layout))
+
+        # 日付表示
+        fig.update_layout(
+                {
+                    "xaxis": {
+                        "tickvals": df.index[::4],
+                        "ticktext": [x.strftime("%m-%d") for x in df.index[::4]],
+                    }
+                }
+        )
+        return fig
