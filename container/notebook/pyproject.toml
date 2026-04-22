@@ -25,6 +25,9 @@ dependencies = [
     "getFamaFrenchFactors>=0.0.5",
     "TA-Lib>=0.4.32",
     "python-dotenv>=1.0.0",
+    "highcharts-core>=1.4.0",
+    "highcharts-stock>=1.4.0",
+    "highcharts-maps>=1.4.0",
 ]
 
 [build-system]

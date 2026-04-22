@@ -2,7 +2,6 @@ import datetime as dt
 import pandas as pd
 from sqlalchemy.orm import Session
 from sqlalchemy.inspection import inspect
-from typing import Any
 
 from app.core.logger import logger
 from app.models.commodity_price import CommodityPrice
@@ -69,16 +68,9 @@ class TimeSeriesCommodityDataService(TimeSeriesDataService):
             logger.error(f"Error fetching time series data: {e}")
             raise RuntimeError("time series data fetch failed") from e
         
-    def _row_to_dict(self, row: Any) -> dict:
-        """
-        ORM行またはテスト用Rowをdictに変換する（CommodityPriceモデルのカラムのみ）
-        Args:
-            row (Any): ORMモデルまたはテスト用Row
-        Returns:
-            dict: カラム名→値の辞書
-        """
+    def _row_to_dict(self, row: CommodityPrice) -> dict:
         if hasattr(row, "to_dict") and callable(row.to_dict):
             return row.to_dict()
 
         mapper = inspect(CommodityPrice)
-        return {column.key: getattr(row, column.key, None) for column in mapper.columns}
+        return {column.key: getattr(row, column.key) for column in mapper.columns}
