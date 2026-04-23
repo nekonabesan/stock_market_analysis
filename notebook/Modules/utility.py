@@ -95,3 +95,47 @@ class Utility:
             print("GET response:", get_response.json())
 
         return df
+    
+    def calc_max_drawdown(self, prices):
+        """
+        最大ドローダウンを計算して返す
+        """
+        cummax_ret = prices.cummax()
+        drawdown = cummax_ret - prices
+        max_drawdown_date = drawdown.idxmax()
+        return drawdown[max_drawdown_date] / cummax_ret[max_drawdown_date]
+
+
+    def calc_sharp_ratio(self, returns):
+        """
+        シャープレシオを計算して返す
+        """
+        # .meanは平均値(=期待値)を求めるメソッド
+        return returns.mean() / returns.std()
+
+
+    def calc_information_ratio(self, returns, benchmark_retruns):
+        """
+        インフォメーションレシオを計算して返す
+        """
+        excess_returns = returns - benchmark_retruns
+        return excess_returns.mean() / excess_returns.std()
+
+
+
+    def calc_sortino_ratio(self, returns):
+        """
+        ソルティノレシオを計算して返す
+        """
+        tdd = math.sqrt(returns.clip_upper(0).pow(2).sum() / returns.size)
+        return returns.mean() / tdd
+
+    def calc_sortino_bench(self, returns, benchmark_retruns):
+        excess_returns = returns - benchmark_retruns
+        return self.calc_sortino_ratio(excess_returns)
+
+    def calc_calmar_ratio(self, prices, returns):
+        """
+        カルマ―レシオを計算して返す
+        """
+        return returns.mean() / self.calc_max_drawdown(prices)

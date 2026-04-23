@@ -1,3 +1,4 @@
+import sys
 import math
 import collections
 from .utility import Utility
@@ -88,3 +89,30 @@ class Portfolio(object):
                         * stock.current_count
                         for code, stock in self.stocks.items())
         return stock_price + self.deposit
+    
+    def calc_winning_percentage(self):
+        """
+        勝率を返す
+        """
+        return (self.count_of_wins / self.count_of_trades) * 100
+
+    def calc_payoff_ratio(self):
+        """
+        ペイオフレシオを返す
+        """
+        loss = self.count_of_trades - self.count_of_wins
+        if self.count_of_wins and loss:
+            ave_gain = self.total_gains / self.count_of_wins
+            ave_losses = self.total_losses / loss
+            return ave_gain / ave_losses
+        else:
+            return sys.float_info.max
+
+    def calc_profit_factor(self):
+        """
+        プロフィットファクターを返す
+        """
+        if self.total_losses:
+            return self.total_gains / self.total_losses
+        else:
+            return sys.float_info.max
