@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import requests
+import datetime as dt
 import pandas as pd
 
 
@@ -62,14 +63,25 @@ class RequestApi:
         APIにPOSTリクエストを送って商品データを更新する関数。
         返却されるDataFrameは、日付をインデックスとし、終値（close）を含む。
         """
+        # validate ISO date strings (YYYY-MM-DD)
+
+        try:
+            if start is not None:
+                dt.date.fromisoformat(start)
+            if end is not None:
+                dt.date.fromisoformat(end)
+        except Exception as e:
+            print(f"Invalid date format for start/end: start={start}, end={end}, error={e}")
+            return json.loads("{}")
+
         post_payload = {
             "code": code,
             "market": market,
             "start": start,
             "end": end
         }
-        # /api/v1/commodity_price/
-        post_url = f"{self.api_base_url}/api/v1/commodity_price/"
+        # correct endpoint: /api/v1/commodity_data/
+        post_url = f"{self.api_base_url}/api/v1/commodity_data/"
         return self._post_request(post_url, post_payload)
     
     def update_corp_finance_data(self, code: str, market: str) -> json:
@@ -234,3 +246,22 @@ class RequestApi:
         }
         # /api/v1/corp_finance_data/quarterly_earnings/
         return self._get_request(get_url, get_params)
+    
+    def search_stock_data(self, code: str, name: str, market: str) -> json:
+        """
+        APIにPOSTリクエストを送って銘柄コードを検索する関数。
+        Args:
+            code (str): 銘柄コード
+            name (str): 銘柄名
+            market (str): 市場コード
+        Returns:
+            json: APIからのレスポンス
+        """
+        post_payload = {
+            "code": code,
+            "name": name,
+            "market": market
+        }
+        # /api/v1/search/
+        post_url = f"{self.api_base_url}/api/v1/search/"
+        return self._post_request(post_url, post_payload)

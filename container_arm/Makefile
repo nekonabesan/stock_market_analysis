@@ -3,7 +3,7 @@
 init-migration:
 	$(COMPOSE) exec api uv run alembic revision --autogenerate -m "init"
 
-COMPOSE := docker compose
+COMPOSE := $(shell (docker compose version >/dev/null 2>&1 && echo "docker compose") || (docker-compose --version >/dev/null 2>&1 && echo "docker-compose") || echo "docker-compose")
 MIGRATION_MSG ?= auto_migration
 TEST_PATH ?= tests/
 
