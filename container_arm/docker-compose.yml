@@ -1,0 +1,82 @@
+services:
+  db:
+    build:
+      context: .
+      dockerfile: db/Dockerfile
+    container_name: stock_market_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-stock_market}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - stock_market_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  api:
+    build:
+      context: ..
+      dockerfile: container_arm/api/Dockerfile
+    container_name: stock_market_api
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-stock_market}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../backend/app:/app/app
+      - ../backend/tests:/app/tests
+      - ../backend/seeds:/app/seeds
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - stock_market_net
+
+  stock_notebook:
+    build:
+      context: ..
+      dockerfile: container_arm/notebook/Dockerfile
+    container_name: stock_market_notebook
+    environment:
+      API_BASE_URL: http://api:8000
+    ports:
+      - "8888:8888"
+    volumes:
+      - ../notebook:/workspace/notebook
+    depends_on:
+      - api
+    networks:
+      - stock_market_net
+
+  mockup:
+    build:
+      context: ..
+      dockerfile: container_arm/mockup/Dockerfile.dev
+    container_name: stock_market_mockup
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../mockup/frontend:/app
+      - mockup_node_modules:/app/node_modules
+    depends_on:
+      - api
+    networks:
+      - stock_market_net
+
+volumes:
+  db_data:
+  mockup_node_modules:
+
+networks:
+  stock_market_net:
+    driver: bridge

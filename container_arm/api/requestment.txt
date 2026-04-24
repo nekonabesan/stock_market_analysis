@@ -1,0 +1,2 @@
+# requirements for api image
+# keep same as container/api/requestment.txt

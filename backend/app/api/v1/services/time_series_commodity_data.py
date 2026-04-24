@@ -73,4 +73,23 @@ class TimeSeriesCommodityDataService(TimeSeriesDataService):
             return row.to_dict()
 
         mapper = inspect(CommodityPrice)
-        return {column.key: getattr(row, column.key) for column in mapper.columns}
+        result: dict = {}
+        for column in mapper.columns:
+            key = column.key
+            # Prefer attribute access, fall back to mapping/item access, finally None
+            if hasattr(row, key):
+                try:
+                    result[key] = getattr(row, key)
+                    continue
+                except Exception:
+                    pass
+            try:
+                # Row may support mapping-like access (e.g. sqlalchemy Row)
+                result[key] = row[key]
+                continue
+            except Exception:
+                pass
+            # last resort: None
+            result[key] = None
+
+        return result
