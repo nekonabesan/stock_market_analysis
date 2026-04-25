@@ -28,6 +28,23 @@ migrate:
 	$(COMPOSE) exec api uv run alembic revision --autogenerate -m "$(MIGRATION_MSG)"
 	$(COMPOSE) exec api uv run alembic upgrade head
 
+# Explicit alembic helpers
+.PHONY: revision upgrade downgrade alembic-current alembic-history
+revision:
+	$(COMPOSE) exec api uv run alembic revision --autogenerate -m "$(MIGRATION_MSG)"
+
+upgrade:
+	$(COMPOSE) exec api uv run alembic upgrade head
+
+downgrade:
+	$(COMPOSE) exec api uv run alembic downgrade -1
+
+alembic-current:
+	$(COMPOSE) exec api uv run alembic current
+
+alembic-history:
+	$(COMPOSE) exec api uv run alembic history --verbose
+
 seed:
 	$(COMPOSE) exec api uv run python -m seeds.run
 

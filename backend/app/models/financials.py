@@ -10,7 +10,7 @@ class Financials(Base):
     __tablename__ = "trn_financials"
 
     date: Mapped[dt_date] = mapped_column(Date, primary_key=True, nullable=False)
-    market: Mapped[str] = mapped_column(String(64), primary_key=True, nullable=False)
+    market: Mapped[str | None] = mapped_column(String(64), nullable=True)
     code: Mapped[str] = mapped_column(String(16), primary_key=True, nullable=False)
     tax_effect_of_unusual_items: Mapped[float] = mapped_column(nullable=True)
     tax_rate_for_calcs: Mapped[float] = mapped_column(nullable=True)

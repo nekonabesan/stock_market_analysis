@@ -312,7 +312,11 @@ def test_get_financials_returns_200_on_success(monkeypatch):
     from app.api.v1.routers import corp_finance_data as router_module
 
     monkeypatch.setattr(router_module, "CorporateFinanceDataService", _GetFinancialsSuccess)
-    monkeypatch.setattr(router_module, "_orm_to_dict", lambda r: r)
+    monkeypatch.setattr(
+        router_module,
+        "OrmSerializer",
+        type("X", (object,), {"to_dict": staticmethod(lambda r: r)}),
+    )
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
@@ -389,7 +393,11 @@ def test_get_balance_sheet_returns_200_on_success(monkeypatch):
     from app.api.v1.routers import corp_finance_data as router_module
 
     monkeypatch.setattr(router_module, "CorporateFinanceDataService", _GetBalanceSheetSuccess)
-    monkeypatch.setattr(router_module, "_orm_to_dict", lambda r: r)
+    monkeypatch.setattr(
+        router_module,
+        "OrmSerializer",
+        type("X", (object,), {"to_dict": staticmethod(lambda r: r)}),
+    )
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
@@ -466,7 +474,11 @@ def test_get_cash_flow_returns_200_on_success(monkeypatch):
     from app.api.v1.routers import corp_finance_data as router_module
 
     monkeypatch.setattr(router_module, "CorporateFinanceDataService", _GetCashFlowSuccess)
-    monkeypatch.setattr(router_module, "_orm_to_dict", lambda r: r)
+    monkeypatch.setattr(
+        router_module,
+        "OrmSerializer",
+        type("X", (object,), {"to_dict": staticmethod(lambda r: r)}),
+    )
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
@@ -543,7 +555,11 @@ def test_get_earnings_returns_200_on_success(monkeypatch):
     from app.api.v1.routers import corp_finance_data as router_module
 
     monkeypatch.setattr(router_module, "CorporateFinanceDataService", _GetEarningsSuccess)
-    monkeypatch.setattr(router_module, "_orm_to_dict", lambda r: r)
+    monkeypatch.setattr(
+        router_module,
+        "OrmSerializer",
+        type("X", (object,), {"to_dict": staticmethod(lambda r: r)}),
+    )
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)
@@ -620,7 +636,11 @@ def test_get_quarterly_earnings_returns_200_on_success(monkeypatch):
     from app.api.v1.routers import corp_finance_data as router_module
 
     monkeypatch.setattr(router_module, "CorporateFinanceDataService", _GetQuarterlyEarningsSuccess)
-    monkeypatch.setattr(router_module, "_orm_to_dict", lambda r: r)
+    monkeypatch.setattr(
+        router_module,
+        "OrmSerializer",
+        type("X", (object,), {"to_dict": staticmethod(lambda r: r)}),
+    )
     app.dependency_overrides[get_db] = _override_db
 
     client = TestClient(app)

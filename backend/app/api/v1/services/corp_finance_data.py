@@ -298,7 +298,7 @@ class CorporateFinanceDataService:
     def get_financial_statements(
         self,
         code: str,
-        market: str,
+        market: str | None = None,
         start: str | date | None = None,
         end: str | date | None = None,
     ) -> list[Financials]:
@@ -312,10 +312,9 @@ class CorporateFinanceDataService:
         Returns:
             list[Financials]: 財務諸表ORMエンティティのリスト
         """
-        stmt = select(Financials).where(
-            Financials.code == code,
-            Financials.market == market,
-        )
+        stmt = select(Financials).where(Financials.code == code)
+        if market is not None and str(market).strip() != "":
+            stmt = stmt.where(Financials.market == market)
 
         if start is not None:
             start_date = date.fromisoformat(start) if isinstance(start, str) else start
@@ -329,7 +328,7 @@ class CorporateFinanceDataService:
     def get_balance_sheet(
         self,
         code: str,
-        market: str,
+        market: str | None = None,
         start: str | date | None = None,
         end: str | date | None = None,
     ) -> list[BalanceSheet]:
@@ -343,10 +342,9 @@ class CorporateFinanceDataService:
         Returns:
             list[BalanceSheet]: バランスシートORMエンティティのリスト
         """
-        stmt = select(BalanceSheet).where(
-            BalanceSheet.code == code,
-            BalanceSheet.market == market,
-        )
+        stmt = select(BalanceSheet).where(BalanceSheet.code == code)
+        if market is not None and str(market).strip() != "":
+            stmt = stmt.where(BalanceSheet.market == market)
 
         if start is not None:
             start_date = date.fromisoformat(start) if isinstance(start, str) else start
@@ -360,7 +358,7 @@ class CorporateFinanceDataService:
     def get_cashflow(
         self,
         code: str,
-        market: str,
+        market: str | None = None,
         start: str | date | None = None,
         end: str | date | None = None,
     ) -> list[CashFlow]:
@@ -374,10 +372,9 @@ class CorporateFinanceDataService:
         Returns:
             list[CashFlow]: キャッシュフローORMエンティティのリスト
         """
-        stmt = select(CashFlow).where(
-            CashFlow.code == code,
-            CashFlow.market == market,
-        )
+        stmt = select(CashFlow).where(CashFlow.code == code)
+        if market is not None and str(market).strip() != "":
+            stmt = stmt.where(CashFlow.market == market)
 
         if start is not None:
             start_date = date.fromisoformat(start) if isinstance(start, str) else start
@@ -391,7 +388,7 @@ class CorporateFinanceDataService:
     def get_earnings(
         self,
         code: str,
-        market: str,
+        market: str | None = None,
         start: str | date | None = None,
         end: str | date | None = None,
     ) -> list[IncomeStatement]:
@@ -405,10 +402,9 @@ class CorporateFinanceDataService:
         Returns:
             list[IncomeStatement]: 収益ORMエンティティのリスト
         """
-        stmt = select(IncomeStatement).where(
-            IncomeStatement.code == code,
-            IncomeStatement.market == market,
-        )
+        stmt = select(IncomeStatement).where(IncomeStatement.code == code)
+        if market is not None and str(market).strip() != "":
+            stmt = stmt.where(IncomeStatement.market == market)
 
         if start is not None:
             start_date = date.fromisoformat(start) if isinstance(start, str) else start
@@ -422,7 +418,7 @@ class CorporateFinanceDataService:
     def get_quarterly_earnings(
         self,
         code: str,
-        market: str,
+        market: str | None = None,
         start: str | date | None = None,
         end: str | date | None = None,
     ) -> list[QuarterlyIncomeStatement]:
@@ -436,10 +432,9 @@ class CorporateFinanceDataService:
         Returns:
             list[QuarterlyIncomeStatement]: 四半期収益ORMエンティティのリスト
         """
-        stmt = select(QuarterlyIncomeStatement).where(
-            QuarterlyIncomeStatement.code == code,
-            QuarterlyIncomeStatement.market == market,
-        )
+        stmt = select(QuarterlyIncomeStatement).where(QuarterlyIncomeStatement.code == code)
+        if market is not None and str(market).strip() != "":
+            stmt = stmt.where(QuarterlyIncomeStatement.market == market)
 
         if start is not None:
             start_date = date.fromisoformat(start) if isinstance(start, str) else start

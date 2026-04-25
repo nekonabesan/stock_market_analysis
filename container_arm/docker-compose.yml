@@ -31,9 +31,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../backend/app:/app/app
-      - ../backend/tests:/app/tests
-      - ../backend/seeds:/app/seeds
+      - ../backend:/app
     depends_on:
       db:
         condition: service_healthy

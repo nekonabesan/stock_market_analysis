@@ -15,9 +15,8 @@ class CorporateFinanceDataUpdateResponse(BaseModel):
 
 class _FinanceGetRequest(BaseModel):
     """財務データ取得 API 共通リクエストモデル"""
-
     code: str
-    market: str
+    market: str | None = None
     start: datetime.date | None = None
     end: datetime.date | None = None
 

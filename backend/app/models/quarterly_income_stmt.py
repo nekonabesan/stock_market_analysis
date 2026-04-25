@@ -10,7 +10,7 @@ class QuarterlyIncomeStatement(Base):
     __tablename__ = "trn_quarterly_income_stmt"
 
     date: Mapped[dt_date] = mapped_column(Date, primary_key=True, nullable=False)
-    market: Mapped[str] = mapped_column(String(64), primary_key=True, nullable=False)
+    market: Mapped[str | None] = mapped_column(String(64), nullable=True)
     code: Mapped[str] = mapped_column(String(16), primary_key=True, nullable=False)
     revenue: Mapped[float] = mapped_column(nullable=False)
     earnings: Mapped[float] = mapped_column(nullable=False)

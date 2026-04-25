@@ -10,7 +10,7 @@ class BalanceSheet(Base):
     __tablename__ = "trn_balance_sheet"
 
     date: Mapped[date] = mapped_column(Date, primary_key=True)
-    market: Mapped[str] = mapped_column(String(64), primary_key=True, nullable=False)
+    market: Mapped[str | None] = mapped_column(String(64), nullable=True)
     code:   Mapped[str] = mapped_column(String(16), primary_key=True, nullable=False)
     treasury_shares_number: Mapped[float] = mapped_column(nullable=True)
     ordinary_shares_number: Mapped[float] = mapped_column(nullable=True)
