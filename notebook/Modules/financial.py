@@ -1,145 +1,29 @@
 import os
-import math
-import requests
 import pandas as pd
+import numpy as np
+import datetime as dt
 
-class Utility:
-    API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
-
-    def calc_tax(self, total_profit: int) -> int:
-        """
-        税金を計算する関数
-        :param total_profit: 総利益
-        :return: 税金額
-        """
-        if total_profit < 0:
-            return 0
-        return int(total_profit * 0.20315)
-
-    def calc_fee(self, total: int)-> int:
-        """
-        手数料を計算する関数
-        :param total: 総取引額
-        :return: 手数料額
-        """
-        if total <= 50000:
-            return 54
-        elif total <= 100000:
-            return 97
-        elif total <= 200000:
-            return 113
-        elif total <= 500000:
-            return 270
-        elif total <= 1000000:
-            return 525
-        elif total <= 1500000:
-            return 628
-        elif total <= 3000000:
-            return 994
-        else:
-            return 1050
-        
-    def calc_cost_of_buying(self, count: int, price: int) -> int:
-        """
-        買いのコストを計算する関数
-        :param count: 株数
-        :param price: 株価
-        :return: 買いのコスト
-        """
-        subtotal = int(count * price)
-        fee = self.calc_fee(subtotal)
-        return subtotal + fee, fee
-
-    def calc_cost_of_selling(self, count: int, price: int) -> int:
-        """
-        売りのコストを計算する関数
-        :param count: 株数
-        :param price: 株価
-        :return: 売りのコスト
-        """
-        subtotal = int(count * price)
-        fee = self.calc_fee(subtotal)
-        return fee, fee
-    
-    def tse_date_range(self, start_date: str, end_date: str) -> list:
-        """
-        japandas を使わず、土日を除く平日のみを返す。
-        返却型は元の関数と同じ DatetimeIndex。
-        """
-        # pandas の標準 BusinessDay（＝土日を除く平日）
-        business_days = pd.offsets.BusinessDay()
-        return pd.date_range(start=start_date, end=end_date, freq=business_days)
-    
-    def get_stock_time_series_data(self, code: str, market: str, start: str, end: str) -> pd.DataFrame:
-        """
-        APIから株価データを取得する関数。
-        返却されるDataFrameは、日付をインデックスとし、終値（close）を含む。
-        """
-        df = pd.DataFrame()
-        get_url = f"{self.API_BASE_URL}/api/v1/time_series_data/stock/"
-        get_params = {
-            "code": code,
-            "market": market,
-            "start": start,
-            "end": end
-        }
-
-        get_response = requests.get(get_url, params=get_params, timeout=60)
-
-        if get_response.status_code == 200:
-            get_json = get_response.json()
-            results = get_json.get("results", [])
-            df = pd.DataFrame(results)
-            print("取得件数:", len(df))
-        else:
-            print("GET response:", get_response.json())
-
-        return df
-    
-    def calc_max_drawdown(self, prices):
-        """
-        最大ドローダウンを計算して返す
-        """
-        cummax_ret = prices.cummax()
-        drawdown = cummax_ret - prices
-        max_drawdown_date = drawdown.idxmax()
-        return drawdown[max_drawdown_date] / cummax_ret[max_drawdown_date]
+from Modules.reques_api import RequestApi
 
 
-    def calc_sharp_ratio(self, returns):
-        """
-        シャープレシオを計算して返す
-        """
-        # .meanは平均値(=期待値)を求めるメソッド
-        return returns.mean() / returns.std()
+class Financial:
+    """
+    ◆ 2. 財務データ（Financials）
+    • 売上高（Revenue）
+    • 営業利益（Operating Income）
+    • 純利益（Net Income）
+    • EBITDA（企業による）
+    • 総資産（Total Assets）
+    • 総負債（Total Liabilities）
+    • 現金（Cash）
+    • 営業キャッシュフロー（Operating Cash Flow）
+    • フリーキャッシュフロー（Free Cash Flow）
+    """
+    def __init__(self):
+        self.api_base_url = os.getenv("API_BASE_URL", "http://localhost:8000")
+        self.request_api = RequestApi(self.api_base_url)
+        pass
 
-
-    def calc_information_ratio(self, returns, benchmark_retruns):
-        """
-        インフォメーションレシオを計算して返す
-        """
-        excess_returns = returns - benchmark_retruns
-        return excess_returns.mean() / excess_returns.std()
-
-
-
-    def calc_sortino_ratio(self, returns):
-        """
-        ソルティノレシオを計算して返す
-        """
-        tdd = math.sqrt(returns.clip_upper(0).pow(2).sum() / returns.size)
-        return returns.mean() / tdd
-
-    def calc_sortino_bench(self, returns, benchmark_retruns):
-        excess_returns = returns - benchmark_retruns
-        return self.calc_sortino_ratio(excess_returns)
-
-    def calc_calmar_ratio(self, prices, returns):
-        """
-        カルマ―レシオを計算して返す
-        """
-        return returns.mean() / self.calc_max_drawdown(prices)
-    
     def _first_nonnull(self, row: pd.Series, keys: list) -> any:
         """
         row の中から keys の順番で最初に見つかった非null値を返す。
@@ -277,3 +161,113 @@ class Utility:
         # 出力整形：date を列として残す or インデックスを date のまま返す
         merged = merged[['operating_income', 'depreciation', 'EBITDA']]
         return merged
+    
+    def calc_ev_par_ebitda(
+        self,
+        ebitda_df: pd.DataFrame,
+        ev_df: pd.DataFrame
+    ) -> pd.DataFrame:
+        """
+        EV/EBITDA を計算する関数。
+        Args:
+        - ebitda_df: EBITDA の値またはシリーズ
+        - ev_df: EV の値またはシリーズ
+        Returns:
+        - EV/EBITDA の値またはシリーズ
+        Notes:
+        - ゼロ割や欠損値には None を返す
+        """
+        # date
+        ebitda_df.reset_index(inplace = True)
+        ev_df.reset_index(inplace = True)
+        # インデックスを揃えるために 'date' 列を datetime 型に変換
+        ebitda_df['date'] = pd.to_datetime(ebitda_df['date'], errors='coerce')
+        ev_df['date'] = pd.to_datetime(ev_df['date'], errors='coerce')
+        # データフレームを結合
+        result_df = pd.merge(ebitda_df, ev_df, on='date', how='left')
+        # EV/EBITDA を計算（ゼロ割や欠損値には None を返す）
+        result_df['EV_par_EBITDA'] = result_df.apply(lambda row: row['EV'] / row['EBITDA'] if row['EBITDA'] not in [0, None, np.nan] else None, axis=1)
+        return result_df
+    
+    def calc_financial(
+        self,
+        code: str,
+        market: str | None
+    ):
+        """
+        ◆ 2. 財務データ（Financials）
+        • 売上高（Revenue）
+        • 営業利益（Operating Income）
+        • 純利益（Net Income）
+        • EBITDA（企業による）
+        • 総資産（Total Assets）
+        • 総負債（Total Liabilities）
+        • 現金（Cash）
+        • 営業キャッシュフロー（Operating Cash Flow）
+        • フリーキャッシュフロー（Free Cash Flow）
+        を計算して返す関数
+        Args:
+            code (str): 銘柄コード
+            market (str | None): 市場コード
+        Returns:
+            pd.DataFrame: 財務データを含むDataFrame
+        """
+        # APIからデータを取得する
+        # ４年分の財務データ
+        financials_data = self.request_api.get_corp_financials_data(code=code, market=market)
+        financials_data_df = pd.DataFrame(financials_data['results'])
+        # ４年分のバランスシート
+        balance_sheet_data = self.request_api.get_corp_balance_sheet_data(code=code, market=market)
+        balance_sheet_data_df = pd.DataFrame(balance_sheet_data['results'])
+        # ４年分のキャッシュフロー
+        cash_flow_data = self.request_api.get_corp_cash_flow_data(code=code, market=market)
+        cash_flow_data_df = pd.DataFrame(cash_flow_data['results'])
+        # ４年分の収益データ
+        earnings_data = self.request_api.get_corp_earnings_data(code=code, market=market)
+        earnings_data_df = pd.DataFrame(earnings_data['results'])
+        # ４年分の四半期収益データ
+        quarterly_earnings_data = self.request_api.get_corp_quarterly_earnings_data(code=code, market=market)
+        quarterly_earnings_data_df = pd.DataFrame(quarterly_earnings_data['results'])
+        # ４年分の株価データ        
+        stock_df = self.request_api.get_stock_time_series_data(
+            code="HYMC",
+            market=None,
+            start="2000-01-01",
+            end=dt.datetime.today().strftime("%Y-%m-%d")
+        )
+        # EV（Enterprise Value）の計算
+        ev_df = self.calc_ev(
+            stock_df=stock_df, 
+            bs_df=balance_sheet_data_df
+        )
+        ev_df = ev_df.reset_index()
+        ev_df['date'] = pd.to_datetime(ev_df['date'], errors='coerce')
+        # EBITDAの計算
+        ebitda_df = self.calculate_ebitda(
+            financials_df=financials_data_df,
+            cash_flow_df=cash_flow_data_df
+        )
+        ebitda_df = ebitda_df.reset_index()
+        ebitda_df['date'] = pd.to_datetime(ebitda_df['date'], errors='coerce')
+        # earnings_data_dfからdate, revenue, earningsを抽出
+        tmp_earnings_df = earnings_data_df[['date', 'revenue', 'earnings']].copy()
+        tmp_earnings_df['date'] = pd.to_datetime(tmp_earnings_df['date'], errors='coerce')
+        # ebitda_dfからdate, ebitdaを抽出
+        tmp_ebitda_df = ebitda_df[['date', 'EBITDA']].copy()
+        tmp_ebitda_df['date'] = pd.to_datetime(tmp_ebitda_df['date'], errors='coerce')
+        # financials_data_dfからdate, operating_incomeを抽出
+        tmp_financials_df = financials_data_df[['date', 'operating_income']].copy()
+        tmp_financials_df['date'] = pd.to_datetime(tmp_financials_df['date'], errors='coerce')
+        # balance_sheet_data_dfからdate, total_assets, total_debt, cash_and_cash_equivalentsを抽出
+        tmp_balance_sheet_df = balance_sheet_data_df[['date', 'total_assets', 'total_debt', 'cash_and_cash_equivalents']].copy()
+        tmp_balance_sheet_df['date'] = pd.to_datetime(tmp_balance_sheet_df['date'], errors='coerce')
+        # cash_flow_data_dfからdate, operating_cash_flow, free_cash_flowを抽出
+        tmp_cash_flow_df = cash_flow_data_df[['date', 'operating_cash_flow', 'free_cash_flow']].copy()
+        tmp_cash_flow_df['date'] = pd.to_datetime(tmp_cash_flow_df['date'], errors='coerce')
+        # データフレームを結合
+        merged_df = tmp_earnings_df.merge(tmp_balance_sheet_df, on='date', how='outer')
+        merged_df = merged_df.merge(tmp_ebitda_df, on='date', how='outer')
+        merged_df = merged_df.merge(tmp_financials_df, on='date', how='outer')
+        merged_df = merged_df.merge(tmp_cash_flow_df, on='date', how='outer')
+        return merged_df
+
