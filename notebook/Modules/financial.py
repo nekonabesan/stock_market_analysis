@@ -255,8 +255,8 @@ class Financial:
         # ebitda_dfからdate, ebitdaを抽出
         tmp_ebitda_df = ebitda_df[['date', 'EBITDA']].copy()
         tmp_ebitda_df['date'] = pd.to_datetime(tmp_ebitda_df['date'], errors='coerce')
-        # financials_data_dfからdate, operating_incomeを抽出
-        tmp_financials_df = financials_data_df[['date', 'operating_income']].copy()
+        # financials_data_dfからdate, operating_income, basic_eps, diluted_epsを抽出
+        tmp_financials_df = financials_data_df[['date', 'operating_income', 'basic_eps', 'diluted_eps']].copy()
         tmp_financials_df['date'] = pd.to_datetime(tmp_financials_df['date'], errors='coerce')
         # balance_sheet_data_dfからdate, total_assets, total_debt, cash_and_cash_equivalentsを抽出
         tmp_balance_sheet_df = balance_sheet_data_df[['date', 'total_assets', 'total_debt', 'cash_and_cash_equivalents']].copy()
@@ -269,5 +269,122 @@ class Financial:
         merged_df = merged_df.merge(tmp_ebitda_df, on='date', how='outer')
         merged_df = merged_df.merge(tmp_financials_df, on='date', how='outer')
         merged_df = merged_df.merge(tmp_cash_flow_df, on='date', how='outer')
+        return merged_df
+    
+    
+    def _calc_pbr(
+        self, 
+        stock_df: pd.DataFrame,
+        bs_df: pd.DataFrame
+    ) -> pd.DataFrame:
+        """
+        BPS（Book Value Per Share）を計算(純資産/発行済株式数)
+        Args:
+            stock_df (pd.DataFrame): 株価の時系列データを含むDataFrame
+            bs_df (pd.DataFrame): バランスシートのデータを含むDataFrame
+        Returns:
+            pd.DataFrame: BPSを含むDataFrame
+        """
+        results = []
+        for _, row in bs_df.iterrows():
+            as_of = row['date']
+            # 1) 当該日以下で最も近い株価を取得
+            candidate = stock_df[stock_df['date'] <= as_of]
+            if candidate.empty or candidate['close'].isna().all():
+                results.append({'date': as_of, 'EV': None, 'reason': 'no_price'})
+                continue
+            # 2) BPS（Book Value Per Share）を計算(純資産/発行済株式数)
+            stockholders_equity = row.get('stockholders_equity')
+            share_issued = row.get('share_issued')
+            bps = bps = stockholders_equity / share_issued
+            price = candidate.sort_values('date', ascending=False).iloc[0]['close']
+            # 3) PBR（Price-to-Book Ratio）を計算(株価/BPS)
+            pbr = price / bps
+            results.append({'date': as_of, 'BPS': bps, 'PBR': pbr})
+        pbr_df = pd.DataFrame(results).set_index('date')
+        return pbr_df
+    
+    def calc_roe(
+        self,
+        financials_df: pd.DataFrame,
+        bs_df: pd.DataFrame
+    ) -> pd.DataFrame:
+        """
+        ROE（Return on Equity）を計算(純利益/自己資本)
+        当期純利益（Net Income）をfinancials_dfから
+        自己資本（stockholders_equity）bs_dfから
+        Args:
+            financials_df (pd.DataFrame): 財務諸表データの DataFrame
+            bs_df (pd.DataFrame): バランスシートのデータを含むDataFrame
+        Returns:
+            pd.DataFrame: ROEを含むDataFrame
+        """
+        tmp_financials_df = financials_df[['date', 'net_income']].copy()
+        tmp_financials_df['date'] = pd.to_datetime(tmp_financials_df['date'], errors='coerce')
+        tmp_bs_df = bs_df[['date', 'stockholders_equity']].copy()
+        tmp_bs_df['date'] = pd.to_datetime(tmp_bs_df['date'], errors='coerce')
+        merged_df = tmp_financials_df.merge(tmp_bs_df, on='date', how='outer')
+        # ROE（Return on Equity）を計算(純利益/自己資本)
+        # 当期純利益（Net Income）をfinancials_data_dfから
+        # 自己資本（stockholders_equity）balance_sheet_data_dfから
+        merged_df['ROE'] = merged_df.apply(lambda row: row['net_income'] / row['stockholders_equity'] if row['stockholders_equity'] not in [0, None, np.nan] else None, axis=1)
+        return merged_df[['date', 'ROE']]
+    
+    
+    def calc_stock_investment_indicators(
+        self,
+        code: str,
+        market: str | None
+    ) -> pd.DataFrame:
+        """
+        株式投資指標を計算して返す関数
+        Args:            code (str): 銘柄コード
+            market (str | None): 市場コード
+        Returns:
+            pd.DataFrame: 株式投資指標を含むDataFrame
+        """
+        # 株価データの取得
+        end = dt.datetime.today().strftime("%Y-%m-%d")
+        start = (dt.datetime.today() - dt.timedelta(days=365)).strftime("%Y-%m-%d")
+        stock_df = self.request_api.get_stock_time_series_data(
+            code=code,
+            market=market,
+            start=start,
+            end=end
+        )
+        # APIからデータを取得する
+        # ４年分の財務データ
+        financials_data = self.request_api.get_corp_financials_data(
+            code=code,
+            market=market
+        )
+        financials_data_df = pd.DataFrame(financials_data['results'])
+        # ４年分のバランスシート
+        balance_sheet_data = self.request_api.get_corp_balance_sheet_data(
+            code=code,
+            market=market
+        )
+        balance_sheet_data_df = pd.DataFrame(balance_sheet_data['results'])
+        # BPS（Book Value Per Share）を計算(純資産/発行済株式数)
+        pbr_df = self._calc_pbr(
+            stock_df=stock_df,
+            bs_df=balance_sheet_data_df
+        )
+        pbr_df = pbr_df.reset_index()  
+        pbr_df['date'] = pd.to_datetime(pbr_df['date'], errors='coerce')
+        # ROE（Return on Equity）を計算(純利益/自己資本)
+        # 当期純利益（Net Income）をfinancials_data_dfから
+        # 自己資本（stockholders_equity）balance_sheet_data_dfから
+        roe_df = self.calc_roe(
+            financials_df=financials_data_df,
+            bs_df=balance_sheet_data_df
+        )
+        roe_df['date'] = pd.to_datetime(roe_df['date'], errors='coerce')
+        # financials_data_dfからdate, operating_income, basic_eps, diluted_epsを抽出
+        tmp_financials_df = financials_data_df[['date', 'operating_income', 'basic_eps', 'diluted_eps']].copy()
+        tmp_financials_df['date'] = pd.to_datetime(tmp_financials_df['date'], errors='coerce')
+        # データフレームを結合
+        merged_df = pbr_df.merge(roe_df, on='date', how='outer')
+        merged_df = merged_df.merge(tmp_financials_df, on='date', how='outer')
         return merged_df
 
