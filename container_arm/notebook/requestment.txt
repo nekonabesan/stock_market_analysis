@@ -1,2 +1,5 @@
 # requirements for notebook image
 # keep same as container/notebook/requestment.txt
+
+# Packages installed via pip outside uv-managed project dependencies.
+markitdown[pdf]

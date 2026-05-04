@@ -5,30 +5,23 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /workspace
 
-# Install system dependencies and compile TA-Lib C library from source
-# Ensure autotools scripts are updated for ARM
+# Install minimal system dependencies (do NOT build TA-Lib from source)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
-    wget \
-    make \
     libffi-dev \
+    poppler-utils \
     ca-certificates \
-    && wget -q https://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz \
-    && tar -xzf ta-lib-0.4.0-src.tar.gz \
-    && cd ta-lib && \
-       wget -q -O config.guess "https://git.savannah.gnu.org/cgit/config.git/plain/config.guess" && \
-       wget -q -O config.sub   "https://git.savannah.gnu.org/cgit/config.git/plain/config.sub" && \
-       chmod +x config.guess config.sub && \
-       ./configure --prefix=/usr && make && make install \
-    && cd .. && rm -rf ta-lib ta-lib-0.4.0-src.tar.gz \
-    && apt-get purge -y wget make \
     && apt-get autoremove -y && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy project definition and install dependencies
-COPY container/notebook/pyproject.toml ./
+COPY container_arm/notebook/pyproject.toml ./
+COPY container_arm/notebook/requestment.txt ./
 RUN uv sync --no-dev --no-install-project
+
+# Install Python packages that are managed outside uv project dependencies.
+RUN uv run pip install --no-cache-dir -r requestment.txt
 
 # Create notebook working directory
 RUN mkdir -p /workspace/notebook

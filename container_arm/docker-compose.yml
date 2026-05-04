@@ -49,8 +49,9 @@ services:
       - "8888:8888"
     volumes:
       - ../notebook:/workspace/notebook
-    depends_on:
-      - api
+      - ../data:/workspace/data
+    # depends_on:
+    #   - api
     networks:
       - stock_market_net
 

@@ -208,3 +208,6 @@ __marimo__/
 
 # Copyrightのために、以下のファイルは管理外とする
 .github/instructions/extract.ja.instructions.md
+
+# dataディレクトリ配下のファイルは管理外とする
+data/*
