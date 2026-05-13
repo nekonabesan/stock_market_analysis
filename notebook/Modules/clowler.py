@@ -16,7 +16,7 @@ class Clowler:
         domain: str,
         keyword: str,
         return_dom: bool = False,
-    ):
+    ) -> None:
             if depth > max_depth:
                 return
             if url in visited:
@@ -71,7 +71,7 @@ class Clowler:
         keyword: str,
         max_depth: int = 3,
         return_dom: bool = False,
-    ):
+    ) -> list:
         visited = set()
         results = []
 
