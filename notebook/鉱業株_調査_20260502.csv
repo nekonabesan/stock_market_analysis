@@ -1,0 +1,40 @@
+﻿name,code,market_code,positioning,financial_risk_ratio,Budget_yen,acquisition,price,currency_conversion_to_target,number_of_shares,account,status,place,country_risk,dd_flg,exchange_rate_yen,purchase_price_yen
+Newmont Corporation Minings,NEM,,Tire1/Core,LOW,,,58.17,USD,25,SBI,HOLD,,,0,152,221046
+Agnico Eagle Mine,AEM,,Tire1/Core,LOW,,,122.02,USD,25,SBI,HOLD,,,0,152,463676
+Wheaton Precious Metals Corp.,WPM,,Tire1/Core,LOW,,,131.49,USD,5,SBI,HOLD,ー,,0,114.42,75225
+Royal Gold Inc,RGLD,,Tire1/Core,LOW,,,222.74,USD,1,SBI,HOLD,ー,,0,114.42,25486
+Pan American Silver Corp,PAAS,,Tire1/Core,LOW,,,60,USD,15,SBI,HOLD,,,0,114.42,102978
+Aya Gold & Silver Inc,AYA,TO,Tire1/Core,LOW,,,25.93,CAD,35,IB,HOLD,モロッコ,Middole,1,114.42,103842
+Integra Resources Corp,ITR,V,Tire1/Core,HIGH,,,3.97,CAD,180,IB,HOLD,US,,0,114.42,81765
+Hecla Mining Co,HL,,Tire1/Core,LOW,,,18.62,USD,30,SBI,HOLD,ー,,1,114.42,63915
+Elemental Royalty Corp,ELE,TO,Tire1/Core,LOW,,,25.24,CAD,25,IB,HOLD,,,0,114.42,72199
+Alkane Resources Ltd,ALK,AX,Tire1/Core,MODELATE,,,1.52,AUD,350,IB,HOLD,AUS,,0,114.42,60871
+Americas Gold and Silver Corporation,USAS,,Tire1/Core,MODELATE,,,6.2,USD,200,SBI,HOLD,US,Middole,1,156.66,194258
+ProShares Short S&P500,SH,,Tire1/Safe,LOW,,,33.9,USD,70,SBI,HOLD,ー,,0,114.42,271519
+Silverco Mining Ltd,SICO,V,Tire2/Hold,HIGH,,,10.013,CAD,100,IB,HOLD,メキシコ,Middole,0,114.42,114569
+Silver Mountain Resources Inc,AGMR,TO,Tire2/Hold,MODELATE,,,4.25,CAD,150,IB,HOLD,ペルー,Middole,0,114.42,72943
+Upside Gold Corp,UG,CN,Tire2/Hold,HIGH,,,1.6,CAD,220,IB,HOLD,CAN,,0,114.42,40276
+Paramount Gold Nevada Corp,PZG,,Tire2/Hold,HIGH,,,1.49,USD,340,SBI,HOLD,US,,0,156,79030
+Avino Silver & Gold Mines Ltd,ASM,,Tire2/Hold,MODELATE,,,7.275,USD,80,SBI,HOLD,メキシコ,Middole,1,156.66,91176
+Andean Silver Ltd,ASL,AX,Tire2/Hold,MODELATE,,,2.12,AUD,400,IB,HOLD,ー,ー,1,114.42,97028
+Blackrock Silver Corp,BRC,V,Tire3/Hold,HIGH,,,1.3,CAD,500,IB,HOLD,US,,0,114.42,74373
+Discovery Silver Corp,DSV,TO,Tire3/Hold,MODELATE,,,9.47,CAD,70,IB,HOLD,メキシコ,,1,114.42,75849
+Andean Precious Metals Corp,APM,TO,Tire3/Hold,HIGH,,,6.67,CAD,80,IB,HOLD,US,Middole,1,114.42,61055
+Endeavour Silver Corp,EXK,,Tire3/hold,MODELATE,,,14.24,CAD,25,IB,HOLD,,,1,114.42,40734
+Endeavour Silver Corp,EDR,TO,Tire3/hold,MODELATE,,,13.82,CAD,26,IB,HOLD,,,1,114.42,41113
+Hycroft Mining Holding Corporation,HYMC,,Tire3/hold,HIGH,,,32.8,USD,40,SBI,HOLD,US,,0,156,204672
+Triumph Gold Corp,TIG,V,Tire3/Hold,HIGH,,,0.49,CAD,180,IB,HOLD,,,0,114.42,10092
+Talisker Resources Ltd.,TSK,TO,Tire3/hold,MODELATE,,,1.46,CAD,100,IB,HOLD,ー,ー,1,114.42,16705
+Northisle Copper and Gold Inc,NCX,V,Tire4/growth,HIGH,,,3.07,CAD,50,IB,HOLD,ー,ー,0,114.42,17563
+Sierra Madre Gold and Silver Ltd,SM,V,Tire4/growth,MODELATE,,,2.07,CAD,50,IB,HOLD,ー,ー,1,114.42,11842
+Greatland Resources Ltd,GGP,AX,Tire4/growth,MODELATE,,,14.52,AUD,40,IB,HOLD,ー,ー,1,114.42,66455
+Capricorn Metals Ltd,CMM,AX,Tire4/growth,HIGH,,,13.42,AUD,40,IB,HOLD,ー,ー,1,114.42,61421
+Honey Badger Silver Inc,TUF,V,Tire4/growth,HIGH,,,0.71,CAD,240,IB,HOLD,CAN,LOW,1,114.42,19497
+1911 Gold Corp,AUMB,V,Tire4/growth,HIGH,,,0.91,CAD,240,IB,HOLD,CAN,LOW,1,114.42,24989
+Blue Lagoon Resources Inc,BLLG,CN,Tire4/growth,HIGH,,,0.91,CAD,240,IB,HOLD,CAN,LOW,0,114.42,24989
+Lahontan Gold Corp,LG,V,Tire4/growth,HIGH,,,0.44,CAD,300,IB,HOLD,US,LOW,0,114.42,15103
+First Tellurium Corp,FTEL,CN,Tire4/growth,HIGH,,,0.235,CAD,383,IB,HOLD,CAN,LOW,0,114.42,10298
+Atomic Eagle Ltd,AEU,ASX,Tire4/growth,HIGH,,,0.42,AUD,1250,IB,Hold,ザンビア,MODELATE,0,152,79800
+Canada Nickel Company Inc,CNC,V,Tire4/growth,MODELETE,,,1.74,CAD,100,IB,Hold,CAN,MODELATE,0,115,20010
+NexGen Energy Ltd,NXE,TO,Tire4/growth,MODELETE,,,15.49,CAD,20,IB,Hold,CAN,MODELATE,0,115,35627
+Guardian Metal Resources PLC,GMTL,,Tire4/growth,HIGH,,,14.5,USD,40,IB,Hold,ー,MODELATE,0,114.42,66364
