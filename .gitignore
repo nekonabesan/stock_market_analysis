@@ -211,3 +211,7 @@ __marimo__/
 
 # dataディレクトリ配下のファイルは管理外とする
 data/*
+
+.DS_Store
+notebook/core
+notebook/*.csv

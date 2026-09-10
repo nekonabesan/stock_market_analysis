@@ -1,6 +1,6 @@
 """make income.revenue nullable
 
-Revision ID: 20260425_make_income_revenue_nullable
+Revision ID: 20260425_income_revenue_nullable
 Revises: f892bf659b0c
 Create Date: 2026-04-25 05:00:00.000000
 
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '20260425_make_income_revenue_nullable'
+revision = '20260425_income_revenue_nullable'
 down_revision = 'f892bf659b0c'
 branch_labels = None
 depends_on = None

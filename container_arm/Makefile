@@ -3,9 +3,11 @@
 init-migration:
 	$(COMPOSE) exec api uv run alembic revision --autogenerate -m "init"
 
-COMPOSE := $(shell (docker compose version >/dev/null 2>&1 && echo "docker compose") || (docker-compose --version >/dev/null 2>&1 && echo "docker-compose") || echo "docker-compose")
 MIGRATION_MSG ?= auto_migration
 TEST_PATH ?= tests/
+
+# Pin project name so down/build-clean only affect this compose stack.
+COMPOSE := $(shell (docker compose version >/dev/null 2>&1 && echo "docker compose -p stock_market_arm") || (docker-compose --version >/dev/null 2>&1 && echo "docker-compose -p stock_market_arm") || echo "docker-compose -p stock_market_arm")
 
 build:
 	$(COMPOSE) down --rmi all --remove-orphans
@@ -25,6 +27,7 @@ logs:
 	$(COMPOSE) logs -f --tail=200
 
 migrate:
+	$(COMPOSE) exec api uv run alembic upgrade head
 	$(COMPOSE) exec api uv run alembic revision --autogenerate -m "$(MIGRATION_MSG)"
 	$(COMPOSE) exec api uv run alembic upgrade head
 

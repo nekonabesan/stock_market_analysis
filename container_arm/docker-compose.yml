@@ -1,3 +1,5 @@
+name: stock_market_arm
+
 services:
   db:
     build:
