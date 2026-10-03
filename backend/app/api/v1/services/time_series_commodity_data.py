@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.inspection import inspect
 
 from app.core.logger import logger
+from app.models.commodities import Commodities
 from app.models.commodity_price import CommodityPrice
 from .time_series_data import TimeSeriesDataService
 
@@ -46,23 +47,35 @@ class TimeSeriesCommodityDataService(TimeSeriesDataService):
             # DBからデータを取得する
             session = db or self.db_session
             data_acquisition_start_date = start - dt.timedelta(days=300)
-            query = (session.query(CommodityPrice)
-                        .filter(CommodityPrice.commodity_code == code)
-                        .filter(CommodityPrice.date >= data_acquisition_start_date)
-                        .filter(CommodityPrice.date <= end))
-            if market is not None:
-                query = query.filter(CommodityPrice.commodity_market == market)
+            query = (
+                session.query(CommodityPrice)
+                .join(Commodities, CommodityPrice.commodity_id == Commodities.id)
+                .filter(Commodities.code == code)
+                .filter(CommodityPrice.date >= data_acquisition_start_date)
+                .filter(CommodityPrice.date <= end)
+            )
+            if market is None:
+                query = query.filter(Commodities.market.is_(None))
+            else:
+                query = query.filter(Commodities.market == market)
 
-            data = query.all()
+            data = query.order_by(CommodityPrice.date.asc()).all()
             if not data:
                 return []
             # 取得したデータをDataFrameに変換し、時系列データを生成する
             df = pd.DataFrame([self._row_to_dict(record) for record in data])
             if df.empty or "date" not in df.columns or "close" not in df.columns:
                 return []
+            if df["date"].duplicated().any():
+                duplicated_dates = df.loc[df["date"].duplicated(keep=False), "date"].unique()
+                raise RuntimeError(
+                    f"duplicate commodity price dates for code={code}: {duplicated_dates[:5]}"
+                )
             # superクラスのget_time_series_dataを呼び出して、時系列データを生成する
             return super().get_time_series_data(df)
         except ValueError:
+            raise
+        except RuntimeError:
             raise
         except Exception as e:
             logger.error(f"Error fetching time series data: {e}")

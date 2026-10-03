@@ -58,6 +58,32 @@ def test_exists_commodity_false(service):
     service.db_session.execute = MagicMock(return_value=MagicMock(first=lambda: None))
     assert service._exists_commodity("GOLD", "COMEX") is False
 
+
+def test_exists_commodity_filters_null_market(service):
+    service.db_session.execute = MagicMock(return_value=MagicMock(first=lambda: None))
+
+    service._exists_commodity("CL=F", None)
+
+    statement = service.db_session.execute.call_args.args[0]
+    assert "mst_commodities.market IS NULL" in str(statement)
+
+
+def test_upsert_price_selects_commodity_for_null_market(service):
+    rows = [{
+        "date": dt.date(2024, 1, 1),
+        "open": 1.0,
+        "high": 2.0,
+        "low": 0.5,
+        "close": 1.5,
+        "adj_close": 1.4,
+        "volume": 100,
+    }]
+
+    service._upsert_trn_commodity_price("CL=F", None, rows)
+
+    statement = service.db_session._executed[0]
+    assert "mst_commodities.market IS NULL" in str(statement)
+
 def test_upsert_commodity(service):
     service._exists_commodity = MagicMock(return_value=False)
     service.db_session.add = MagicMock()

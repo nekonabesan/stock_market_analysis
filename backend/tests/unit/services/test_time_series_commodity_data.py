@@ -8,18 +8,36 @@ from app.api.v1.services.time_series_commodity_data import TimeSeriesCommodityDa
 class DummySession:
     def __init__(self, data=None):
         self._data = data or []
+        self.last_query = None
     def query(self, model):
+        self.last_query = DummyQuery(self._data)
+        return self.last_query
+
+
+class DummyQuery:
+    def __init__(self, data):
+        self._data = data
+        self.filters = []
+
+    def join(self, *_args, **_kwargs):
         return self
+
     def filter(self, *args, **kwargs):
+        self.filters.extend(args)
         return self
+
+    def order_by(self, *_args, **_kwargs):
+        return self
+
     def all(self):
         return self._data
 
-def make_commodity_row(date, close=100, high=110, low=90, open_=95, adj_close=100, volume=1000, market="COM", code="GOLD"):
+def make_commodity_row(date, close=100, high=110, low=90, open_=95, adj_close=100, volume=1000, market="COM", code="GOLD", commodity_id=1):
     class Row:
         pass
     r = Row()
     r.id = 1
+    r.commodity_id = commodity_id
     r.date = date
     r.close = close
     r.high = high
@@ -56,6 +74,29 @@ def test_time_series_commodity_data_service_get_time_series_data(commodity_servi
     assert "ma5" in result[0]
     assert "macd" in result[0]
     assert "rsi14" in result[0]
+
+
+def test_time_series_commodity_data_service_filters_null_market():
+    records = [make_commodity_row(dt.date(2024, 1, day)) for day in range(1, 31)]
+    session = DummySession(data=records)
+    service = TimeSeriesCommodityDataService(db_session=session)
+
+    result = service.get_time_series_data("GOLD", None, dt.date(2024, 1, 1), dt.date(2024, 1, 30))
+
+    assert result
+    assert any("mst_commodities.market IS NULL" in str(clause) for clause in session.last_query.filters)
+
+
+def test_time_series_commodity_data_service_rejects_duplicate_dates():
+    duplicate_date = dt.date(2024, 1, 1)
+    records = [
+        make_commodity_row(duplicate_date, commodity_id=1),
+        make_commodity_row(duplicate_date, commodity_id=1),
+    ]
+    service = TimeSeriesCommodityDataService(db_session=DummySession(data=records))
+
+    with pytest.raises(RuntimeError, match="duplicate commodity price dates"):
+        service.get_time_series_data("GOLD", None, duplicate_date, duplicate_date)
 
 def test_time_series_commodity_data_service_invalid_period(commodity_service):
     with pytest.raises(ValueError):

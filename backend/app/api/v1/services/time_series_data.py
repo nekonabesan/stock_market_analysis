@@ -43,6 +43,10 @@ class TimeSeriesDataService:
             # 移動平均線を導出
             df["ma5"] = self._calc_sma(close, window=5)
             df["ma25"] = self._calc_sma(close, window=25)
+            df["ma50"] = self._calc_sma(close, window=50)
+            df["ma100"] = self._calc_sma(close, window=100)
+            df["ma150"] = self._calc_sma(close, window=150)
+            df["ma200"] = self._calc_sma(close, window=200)
 
             # RSIを導出
             df["rsi14"] = self._calc_rsi(close, timeperiod=14)
@@ -57,6 +61,8 @@ class TimeSeriesDataService:
 
             # EMAを導出
             df["ema_20"] = self._calc_ema(close, window=20)
+            df["ema_50"] = self._calc_ema(close, window=50)
+            df["ema_200"] = self._calc_ema(close, window=200)
 
             # ストキャスティクスを導出
             df['slowK'], df['slowD'] = self._calc_stochastic(df, fastk_period=5, slowk_period=3, slowd_period=3,
@@ -72,6 +78,7 @@ class TimeSeriesDataService:
             # RCIを導出
             df["rci9"] = self._calc_rci(close, window=9)
             df["rci26"] = self._calc_rci(close, window=26)
+            df["rci52"] = self._calc_rci(close, window=52)
 
             # 移動平均線のゴールデンクロスとデッドクロスを導出
             df["gc"], df["dc"] = self._calc_gc(df)

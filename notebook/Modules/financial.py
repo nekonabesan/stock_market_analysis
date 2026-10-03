@@ -230,7 +230,7 @@ class Financial:
         quarterly_earnings_data_df = pd.DataFrame(quarterly_earnings_data['results'])
         # ４年分の株価データ        
         stock_df = self.request_api.get_stock_time_series_data(
-            code="HYMC",
+            code=code,
             market=None,
             start="2000-01-01",
             end=dt.datetime.today().strftime("%Y-%m-%d")

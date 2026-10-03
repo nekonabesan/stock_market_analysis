@@ -78,7 +78,9 @@ class CommodityDataService:
 
     def _exists_commodity(self, code: str, market: str | None) -> bool:
         stmt = select(Commodities.id).where(Commodities.code == code)
-        if market is not None:
+        if market is None:
+            stmt = stmt.where(Commodities.market.is_(None))
+        else:
             stmt = stmt.where(Commodities.market == market)
         return self.db_session.execute(stmt.limit(1)).first() is not None
 
@@ -151,10 +153,12 @@ class CommodityDataService:
         """
         # --- 1. commodity_id を取得 ---
         stmt = select(Commodities.id).where(Commodities.code == code)
-        if market is not None:
+        if market is None:
+            stmt = stmt.where(Commodities.market.is_(None))
+        else:
             stmt = stmt.where(Commodities.market == market)
 
-        commodity_id = self.db_session.execute(stmt.limit(1)).scalar_one_or_none()
+        commodity_id = self.db_session.execute(stmt).scalar_one_or_none()
         if commodity_id is None:
             raise ValueError(f"Commodity not found: code={code}, market={market}")
 
@@ -217,7 +221,9 @@ class CommodityDataService:
             CommodityPrice.date >= start,
             CommodityPrice.date <= end,
         )
-        if market is not None:
+        if market is None:
+            stmt = stmt.where(Commodities.market.is_(None))
+        else:
             stmt = stmt.where(Commodities.market == market)
         return self.db_session.execute(stmt.order_by(CommodityPrice.date.asc())).scalars().all()
 

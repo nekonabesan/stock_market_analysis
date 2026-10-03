@@ -147,7 +147,13 @@ class ShowPlot:
             name: str | None = None,
             code: str | None = None,
             start: str | None = None,
-            end: str | None = None
+            end: str | None = None,
+            ma5: bool | None = True,
+            ma25: bool | None = True,
+            ma50: bool | None = False,
+            ma100: bool | None = False,
+            ma150: bool | None = False,
+            ma200: bool | None = False,
         ) -> go.Figure:
         """
         APIから取得したデータをもとに基本的なローソク足チャートを作成する
@@ -160,6 +166,12 @@ class ShowPlot:
             code (str): 銘柄コード。
             start (str): 開始日（YYYY-MM-DD形式）。
             end (str): 終了日（YYYY-MM-DD形式）。
+            ma5 (bool | None): 5日移動平均線を表示するか。既定値はTrue。
+            ma25 (bool | None): 25日移動平均線を表示するか。既定値はTrue。
+            ma50 (bool | None): 50日移動平均線を表示するか。既定値はFalse。
+            ma100 (bool | None): 100日移動平均線を表示するか。既定値はFalse。
+            ma150 (bool | None): 150日移動平均線を表示するか。既定値はFalse。
+            ma200 (bool | None): 200日移動平均線を表示するか。既定値はFalse。 
         Returns:
         """
         # date列をインデックスに設定してスライス
@@ -192,8 +204,29 @@ class ShowPlot:
                     decreasing_line_color="gray",
                     name=code,
                 ),
-                go.Scatter(yaxis="y1", x=df.index, y=df["ma5"], name="MA5", line={"color": "royalblue", "width": 1.2}),
-                go.Scatter(yaxis="y1", x=df.index, y=df["ma25"], name="MA25", line={"color": "lightseagreen", "width": 1.2}),
+        ]
+
+        moving_average_options = (
+            (ma5, "ma5", "MA5", "royalblue"),
+            (ma25, "ma25", "MA25", "lightseagreen"),
+            (ma50, "ma50", "MA50", "gold"),
+            (ma100, "ma100", "MA100", "orange"),
+            (ma150, "ma150", "MA150", "brown"),
+            (ma200, "ma200", "MA200", "purple"),
+        )
+        for enabled, column, label, color in moving_average_options:
+            if enabled:
+                data.append(
+                    go.Scatter(
+                        yaxis="y1",
+                        x=df.index,
+                        y=df[column],
+                        name=label,
+                        line={"color": color, "width": 1.2},
+                    )
+                )
+
+        data.extend([
                 go.Scatter(yaxis="y1", x=df.index, y=df["upper2"], name="", line={"color": "lavender", "width": 0}),
                 go.Scatter(
                     yaxis="y1",
@@ -210,7 +243,7 @@ class ShowPlot:
                 go.Scatter(yaxis="y4", x=df.index, y=df["rci9"], name="RCI9", line={"color": "magenta", "width": 1}),
                 go.Scatter(yaxis="y4", x=df.index, y=df["rci26"], name="RCI26", line={"color": "green", "width": 1}),
                 go.Bar(yaxis="y5", x=df.index, y=df["volume"], name="Volume", marker=dict(color="slategray")),
-        ]
+            ])
 
         # Figure作成
         fig = go.Figure(data=data, layout=go.Layout(layout))

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, String, Integer, func, UniqueConstraint, ForeignKey
+from sqlalchemy import DateTime, String, Integer, func, UniqueConstraint, ForeignKey, Index, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.session import Base
@@ -9,6 +9,13 @@ class Commodities(Base):
     __tablename__ = "mst_commodities"
     __table_args__ = (
         UniqueConstraint("code", "market", name="uq_commodities_code_market"),
+        Index(
+            "uq_commodities_code_null_market",
+            "code",
+            unique=True,
+            postgresql_where=text("market IS NULL"),
+            sqlite_where=text("market IS NULL"),
+        ),
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, index=True)
