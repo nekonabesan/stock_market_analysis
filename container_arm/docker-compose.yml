@@ -47,6 +47,7 @@ services:
     container_name: stock_market_notebook
     environment:
       API_BASE_URL: http://api:8000
+      FRED_API_KEY: ${FRED_API_KEY:?FRED_API_KEY is not set}
     ports:
       - "8888:8888"
     volumes:

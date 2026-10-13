@@ -51,7 +51,9 @@ class TimeSeriesStockDataService(TimeSeriesDataService):
                         .filter(StockPrice.stock_code == code)
                         .filter(StockPrice.date >= data_acquisition_start_date)
                         .filter(StockPrice.date <= end))
-            if market is not None:
+            if market is None:
+                query = query.filter(StockPrice.stock_market.is_(None))
+            else:
                 query = query.filter(StockPrice.stock_market == market)
 
             data = query.all()
