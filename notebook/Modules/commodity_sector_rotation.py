@@ -51,7 +51,7 @@ class CommoditySectorRotation(SectorRotation):
         super().__init__()
         self.start = start_date or (dt.datetime.now() - dt.timedelta(days=365)).strftime("%Y-%m-%d")
         self.end = end_date or dt.datetime.now().strftime("%Y-%m-%d")
-        #self.API_BASE_URL = api_base_url or self.API_BASE_URL
+        self.API_BASE_URL = api_base_url or self.API_BASE_URL
         self.OUTPUT_DIR = output_dir or self.OUTPUT_DIR
         # Ensure the output directory exists
         self.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
