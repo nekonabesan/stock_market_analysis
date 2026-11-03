@@ -1,5 +1,7 @@
 import requests
+import os
 import json
+import time
 import pandas as pd
 
 from typing import Any
@@ -10,6 +12,8 @@ class RequestApi(RequestApi):
     """
     RequestAPI不具合対応移行版
     """
+    FRED_URL = "https://api.stlouisfed.org/fred/series/observations"
+
     def __init__(self, api_base_url: str):
         self.api_base_url = api_base_url
         super().__init__(api_base_url)
@@ -479,3 +483,40 @@ class RequestApi(RequestApi):
             },
             index=df.index,
         )
+
+    def get_fred_timeseries_data(
+        self,
+        observation_start: str,
+        observation_end: str,
+        series_mapping: dict[str, str] | None = None,
+        frequency: str | None = None,
+        aggregation_method: str | None = None,
+        fred_url: str | None = None,
+        fred_api_key: str | None = None,
+    ) -> dict[str, pd.DataFrame]:
+        observation_start = observation_start
+        observation_end = observation_end
+        fred_url = fred_url or self.FRED_URL
+        fred_api_key = fred_api_key or os.getenv("FRED_API_KEY")
+        base_fred_params = {
+            "api_key": fred_api_key,
+            "file_type": "json",
+            "observation_start": observation_start,
+            "observation_end": observation_end,
+            "frequency": frequency or "m",
+            "aggregation_method": aggregation_method or "avg",
+        }
+        fred_dfs = {}
+        for series_id, series_name in series_mapping.items():
+            fred_params = base_fred_params.copy()
+            fred_params["series_id"] = series_id
+            fred_res = requests.get(fred_url, params=fred_params)
+            fred_df = pd.DataFrame(fred_res.json()["observations"]).assign(**{
+                "date": lambda df: pd.to_datetime(df["date"]),
+                "value": lambda df: pd.to_numeric(df["value"], errors="coerce"),
+                "interest_rate_type": series_name,
+            })
+            fred_dfs[series_name] = fred_df
+            time.sleep(5)
+            
+        return fred_dfs

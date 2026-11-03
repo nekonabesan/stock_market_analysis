@@ -37,6 +37,7 @@ dependencies = [
 	"highcharts-stock>=1.4.0",
 	"highcharts-maps>=1.4.0",
     "PyWavelets>=1.6.0",
+	"pykalman>=0.9.7",
 ]
 
 [build-system]
