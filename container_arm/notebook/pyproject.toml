@@ -38,6 +38,7 @@ dependencies = [
 	"highcharts-maps>=1.4.0",
     "PyWavelets>=1.6.0",
 	"pykalman>=0.9.7",
+	"casadi>=3.6.5",
 ]
 
 [build-system]

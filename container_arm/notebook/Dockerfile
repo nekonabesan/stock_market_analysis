@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     poppler-utils \
     ca-certificates \
     chromium \
+    libgomp1 \
     && apt-get autoremove -y && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
